@@ -155,7 +155,7 @@ class ApiBillingAddress {
         'postal_code': '5800',
         'outside': 'no',
         'inside': 'no',
-        'isDefault': '1',
+        'default': '1',
         'state_id': '1',
         'customer_id': '1'
       },
@@ -169,7 +169,7 @@ class ApiBillingAddress {
         'postal_code': '1234',
         'outside': 'no',
         'inside': 'no',
-        'isDefault': '1',
+        'default': '1',
         'state_id': '1',
         'customer_id': '1'
       },
@@ -183,7 +183,7 @@ class ApiBillingAddress {
         'postal_code': '9878',
         'outside': 'no',
         'inside': 'no',
-        'isDefault': '1',
+        'default': '0',
         'state_id': '1',
         'customer_id': '1'
       }

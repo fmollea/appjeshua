@@ -13,7 +13,9 @@ class OrderDto {
     subtotal = snapshot['subtotal'];
     status = snapshot['status'];
     open = snapshot['open'];
-    create = DateTime.parse(snapshot['created_at']);
+    create = snapshot['s'] == 'n'
+        ? DateTime.parse(snapshot['created_at'])
+        : DateTime.now();
     paid = snapshot['paid'];
   }
 }

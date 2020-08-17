@@ -27,7 +27,7 @@ class ApiOrder {
         'status': 'abierto',
         'open': 'si',
         'paid': 'no',
-        'create_at': '2020-08-08'
+        'created_at': 'a'
       },
       {
         'id': 1,
@@ -35,8 +35,8 @@ class ApiOrder {
         'subtotal': '5500',
         'status': 'cerrado',
         'open': 'no',
+        'created_at': 'a',
         'paid': 'si',
-        'create_at': '2020-08-01'
       }
     ];
 
