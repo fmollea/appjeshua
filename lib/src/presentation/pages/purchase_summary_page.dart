@@ -71,7 +71,7 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
   Widget _drawCartResume() {
     return Container(
         height: 48,
-        padding: EdgeInsets.only(left: 8, right: 8, top: 8),
+        padding: EdgeInsets.only(left: 16, right: 16, top: 8),
         color: Colors.grey[200],
         child: Row(
           children: <Widget>[
@@ -131,11 +131,13 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(listCarts.list[index].product.name,
-                        style: TextStyle(
-                            color: Colors.black87,
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold)),
+                    Center(
+                      child: Text(listCarts.list[index].product.name,
+                          style: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold)),
+                    ),
                     Text('', style: TextStyle(fontSize: 8.0)),
                     Text("Código: " + listCarts.list[index].product.code,
                         style:

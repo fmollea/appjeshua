@@ -29,30 +29,37 @@ class _SearchWidgetState extends State<SearchWidget> {
   Widget _searchText() {
     return Expanded(
         child: Container(
-            height: 36,
+            height: 48,
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(16.0)),
-            child: Padding(
-              padding: EdgeInsets.only(left: 8, right: 8),
-              child: TextField(
-                cursorColor: Utils.primaryColor,
-                style: TextStyle(color: Colors.black87),
-                decoration: InputDecoration(
-                  hintText: "Busca aquí tu producto..",
-                  hintStyle: TextStyle(color: Colors.black87),
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Padding(
+                padding: EdgeInsets.only(left: 8, right: 8),
+                child: TextField(
+                  cursorColor: Utils.primaryColor,
+                  style: TextStyle(color: Colors.black87),
+                  decoration: InputDecoration(
+                    hintText: "Busca aquí tu producto..",
+                    hintStyle: TextStyle(color: Colors.black87),
+                  ),
+                  onChanged: (value) => setState(() {
+                    args = value;
+                  }),
                 ),
-                onChanged: (value) => setState(() {
-                  args = value;
-                }),
               ),
-            )));
+            ])));
   }
 
   Widget _buttonSearch() {
     return Padding(
       padding: EdgeInsets.only(left: 4),
       child: InkResponse(
-        child: Icon(Icons.search, color: Colors.white),
+        child: Icon(
+          Icons.search,
+          color: Colors.white,
+          size: 32,
+        ),
         onTap: navToPage,
       ),
     );

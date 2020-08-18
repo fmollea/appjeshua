@@ -116,9 +116,16 @@ class _DeliveryPointPageState extends State<DeliveryPointPage> {
         title: Text(item.name, style: TextStyle(fontSize: 18.0)),
         subtitle: Row(
           children: <Widget>[
-            Text(item.address + ' ', style: TextStyle(fontSize: 16.0)),
-            Text(item.postalCode + ', ' + item.city,
-                style: TextStyle(fontSize: 16.0))
+            Text(
+              item.address + ' ',
+              style: TextStyle(fontSize: 16.0),
+              maxLines: 2,
+            ),
+            Text(
+              item.postalCode + ', ' + item.city,
+              style: TextStyle(fontSize: 16.0),
+              maxLines: 2,
+            )
           ],
         ),
         leading: icon,

@@ -17,6 +17,7 @@ class Utils {
 
   //Colors
   static final Color primaryColor = Color.fromRGBO(0, 65, 130, 1);
+  static final Color secondaryColor = Color(0xFF476bb2);
   static final Color redColor = Color.fromRGBO(227, 42, 37, 1);
   static final Color iconBottomColor = Color.fromRGBO(0, 242, 255, 1);
   static final Color textDarkColor = Colors.black87;
@@ -34,7 +35,8 @@ class Utils {
     'person': Icons.person_outline,
     'password': Icons.lock_outline,
     'not_fav': Icons.favorite_border,
-    'is_fav': Icons.favorite
+    'is_fav': Icons.favorite,
+    'notification': Icons.notifications_none
   };
 
   Icon getIcon(String iconName, Color colorIcon) {

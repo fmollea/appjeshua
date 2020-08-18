@@ -1,6 +1,7 @@
 import 'package:appjeshua/src/commons/Utils.dart';
 import 'package:appjeshua/src/core/models/product.dart';
 import 'package:appjeshua/src/core/services/apiFavourite.dart';
+import 'package:appjeshua/src/presentation/widget/empty_state_widget.dart';
 import 'package:appjeshua/src/presentation/widget/list_product_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -38,6 +39,7 @@ class _FavoritePageState extends State<FavoritePage> {
   _drawList() {
     if (_list == null || _list.isEmpty) {
       _fetchData();
+      emptyState();
       return Center(child: CircularProgressIndicator());
     } else {
       return ListProductWidget(
@@ -45,6 +47,13 @@ class _FavoritePageState extends State<FavoritePage> {
         scrollController: _scrollController,
       );
     }
+  }
+
+  Widget emptyState() {
+    return EmptyStateWidget(
+      text: 'No posee favoritos.',
+      path: 'assets/lottie_empty_favorite.json',
+    );
   }
 
   _fetchData() async {

@@ -75,14 +75,16 @@ class _CardProductWidgetState extends State<CardProductWidget> {
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.lightBlue[800],
-                    fontSize: 18),
+                    fontSize: 18,
+                    fontFamily: 'Roboto'),
               ),
               Text(
                 '\$' + item.pricePublic,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.lightBlue[800],
-                    fontSize: 18),
+                    fontSize: 18,
+                    fontFamily: 'Roboto'),
               ),
             ],
           ),
@@ -97,14 +99,16 @@ class _CardProductWidgetState extends State<CardProductWidget> {
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.lightBlue[800],
-                    fontSize: 14),
+                    fontSize: 14,
+                    fontFamily: 'Roboto'),
               ),
               Text(
                 'Público',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.lightBlue[800],
-                    fontSize: 14),
+                    fontSize: 14,
+                    fontFamily: 'Roboto'),
               ),
             ],
           ),

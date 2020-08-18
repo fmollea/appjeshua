@@ -16,13 +16,20 @@ class _CarouselWidgetState extends State<CarouselWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      /*   decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: const FractionalOffset(0.0, 0.0),
+          end: const FractionalOffset(0.0, 0.7),
+          colors: <Color>[Utils.primaryColor, Colors.white],
+        ),
+      ),*/
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
         children: [
           CarouselSlider(
               options: CarouselOptions(
-                  aspectRatio: 2.75,
+                  aspectRatio: 2.4,
                   autoPlay: true,
                   enlargeCenterPage: true,
                   autoPlayInterval: Duration(seconds: 3),

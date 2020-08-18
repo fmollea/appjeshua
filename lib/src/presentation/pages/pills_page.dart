@@ -103,23 +103,31 @@ class _PillsPageState extends State<PillsPage> {
   }
 
   _drawRowCategories(String path, String name) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Column(
-        children: [
-          Image(
-              image: AssetImage('assets/$path.png'),
-              fit: BoxFit.fill,
-              height: 70,
-              width: 70),
-          Container(height: 2),
-          Text(name)
-        ],
+    return GestureDetector(
+      onTap: navToProductList,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Column(
+          children: [
+            Image(
+                image: AssetImage('assets/$path.png'),
+                fit: BoxFit.fill,
+                height: 70,
+                width: 70),
+            Container(height: 2),
+            Text(name)
+          ],
+        ),
       ),
     );
   }
 
   void navToCart() {
     Navigator.pushNamed(context, 'purchase_summary_page');
+  }
+
+  void navToProductList() {
+    Map<String, String> mapOfArgs = {"queryparam": ''};
+    Navigator.pushNamed(context, 'products_page', arguments: mapOfArgs);
   }
 }

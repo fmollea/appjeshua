@@ -73,8 +73,7 @@ class _BillingAddressPageState extends State<BillingAddressPage> {
             child: Card(
                 child: ListTile(
               onTap: addAddress,
-              leading:
-                  Icon(Icons.add_circle_outline, color: Utils.primaryColor),
+              leading: Icon(Icons.add_circle_outline, color: Utils.redColor),
               title: Text("Agregar dirección",
                   style: TextStyle(color: Colors.black87, fontSize: 18.0)),
               subtitle: Text("Agregue la dirección de facturación",
@@ -101,7 +100,7 @@ class _BillingAddressPageState extends State<BillingAddressPage> {
     Icon icon;
 
     if (item.isDefault != 0) {
-      icon = Icon(Icons.speaker_notes, color: Utils.primaryColor);
+      icon = Icon(Icons.speaker_notes, color: Utils.redColor);
       user.billingId = item.id;
     } else {
       icon = Icon(Icons.speaker_notes_off, color: Colors.grey);
@@ -116,9 +115,16 @@ class _BillingAddressPageState extends State<BillingAddressPage> {
         title: Text(item.businessName, style: TextStyle(fontSize: 18.0)),
         subtitle: Row(
           children: <Widget>[
-            Text(item.address + ' ', style: TextStyle(fontSize: 16.0)),
-            Text(item.postalCode + ', ' + item.city,
-                style: TextStyle(fontSize: 16.0))
+            Text(
+              item.address + ' ',
+              style: TextStyle(fontSize: 16.0),
+              maxLines: 2,
+            ),
+            Text(
+              item.postalCode + ', ' + item.city,
+              style: TextStyle(fontSize: 16.0),
+              maxLines: 2,
+            )
           ],
         ),
         leading: icon,

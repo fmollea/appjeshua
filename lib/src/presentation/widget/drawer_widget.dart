@@ -33,8 +33,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
       color: Utils.primaryColor,
       child: ListView(
         children: <Widget>[
-          _drawListTile('products', 'Productos', 'products_page'),
+          _drawListTile('products', 'Ofertas', 'products_page'),
           _drawListTile('category', 'Categorías', 'category_page'),
+          _drawListTile('notification', 'Notificaciones', 'notification_page'),
           _drawListTile('cart', 'Mi carrito', 'purchase_summary_page'),
           _drawListTile('history', 'Historial', 'history_order_page'),
           _drawListTile('help', 'Ayuda', 'help_page'),

@@ -27,7 +27,7 @@ class _RowPurchaseSummaryState extends State<RowPurchaseSummary> {
             Padding(
                 padding: EdgeInsets.only(left: 8, right: 8),
                 child: FadeInImage.assetNetwork(
-                    placeholder: 'assets/liftnotimage.png',
+                    placeholder: 'assets/not_found.png',
                     image: _cart.product.path,
                     width: 100,
                     height: 100,

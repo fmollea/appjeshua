@@ -81,8 +81,7 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
             padding: EdgeInsets.only(left: 32, right: 32),
             child: Card(
                 child: ListTile(
-              leading:
-                  Icon(Icons.add_circle_outline, color: Utils.primaryColor),
+              leading: Icon(Icons.add_circle_outline, color: Utils.redColor),
               title: Text("Método de pago no disponible",
                   style: TextStyle(color: Colors.black87, fontSize: 18.0)),
               subtitle: Text(
@@ -107,7 +106,7 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
     Icon icon;
 
     if (item.isSelected) {
-      icon = Icon(Icons.check_circle_outline, color: Utils.primaryColor);
+      icon = Icon(Icons.check_circle_outline, color: Utils.redColor);
       user.paymentId = item.id;
     } else {
       icon = Icon(Icons.radio_button_unchecked, color: Colors.grey);
