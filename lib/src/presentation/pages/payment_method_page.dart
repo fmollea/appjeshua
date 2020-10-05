@@ -113,6 +113,7 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
     }
 
     return Card(
+      margin: EdgeInsets.symmetric(vertical: 12.0),
       child: ListTile(
         onTap: () {
           _selectedAddress(index);

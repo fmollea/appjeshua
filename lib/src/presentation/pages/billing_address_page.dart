@@ -107,7 +107,7 @@ class _BillingAddressPageState extends State<BillingAddressPage> {
     }
 
     return Card(
-      margin: EdgeInsets.only(top: 12.0, bottom: 12.0),
+      margin: EdgeInsets.symmetric(vertical: 12.0),
       child: ListTile(
         onTap: () {
           _selectedAddress(index);

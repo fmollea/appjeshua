@@ -45,11 +45,10 @@ class PurchaseConfirmationPage extends StatelessWidget {
                   title: Text(
                       'Es necesario que después de realizar el pago mandar el comprobante a:',
                       style: TextStyle(color: Colors.black54, fontSize: 18.0)),
-                  subtitle: Text('info@rentamontacargasygruas.com',
+                  subtitle: Text('info@jesuamedic.com',
                       style:
                           TextStyle(color: Utils.primaryColor, fontSize: 16.0)),
-                  leading:
-                      Icon(Icons.mail_outline, color: Utils.primaryColor))),
+                  leading: Icon(Icons.mail_outline, color: Utils.redColor))),
           Text(
             '',
             style: TextStyle(fontSize: 12),
@@ -61,8 +60,8 @@ class PurchaseConfirmationPage extends StatelessWidget {
                   subtitle: Text('confirmes el pago',
                       style:
                           TextStyle(color: Utils.primaryColor, fontSize: 16.0)),
-                  leading: Icon(Icons.playlist_add_check,
-                      color: Utils.primaryColor))),
+                  leading:
+                      Icon(Icons.playlist_add_check, color: Utils.redColor))),
           Expanded(child: Text('')),
           ButtonWidget(() {
             Navigator.pushNamed(context, 'purchase_made_page');

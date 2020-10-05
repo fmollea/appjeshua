@@ -46,7 +46,7 @@ class PurchaseMadePage extends StatelessWidget {
           ),
           Center(
               child: Text('¡Gracias por tu compra!',
-                  style: TextStyle(color: Colors.blue[700], fontSize: 24.0),
+                  style: TextStyle(color: Utils.redColor, fontSize: 24.0),
                   textAlign: TextAlign.center)),
           Text(
             '',

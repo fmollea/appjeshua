@@ -131,13 +131,11 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Center(
-                      child: Text(listCarts.list[index].product.name,
-                          style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold)),
-                    ),
+                    Text(listCarts.list[index].product.name,
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold)),
                     Text('', style: TextStyle(fontSize: 8.0)),
                     Text("Código: " + listCarts.list[index].product.code,
                         style:
