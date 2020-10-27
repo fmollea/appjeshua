@@ -137,7 +137,7 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold)),
                     Text('', style: TextStyle(fontSize: 8.0)),
-                    Text("Código: " + listCarts.list[index].product.code,
+                    Text("Código: " + listCarts.list[index].product.sku,
                         style:
                             TextStyle(color: Colors.black54, fontSize: 16.0)),
                     Text('', style: TextStyle(fontSize: 8.0)),

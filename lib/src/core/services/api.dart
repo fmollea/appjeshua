@@ -1,15 +1,16 @@
 class Api {
 
-  final String urlBase = 'www.partsmont.com';
+  final String urlBase = 'jeshuamedic.com';
 
   final String urlRegister = 'partsmontapi/api/register';
-  final String urlLogin = 'partsmontapi/api/login';
+  final String urlLogin = '4dministraci0n/api/ingresar';
   final String urlForgetPass = 'partsmontapi/api/reset/password';
 
-  final String urlProduct = 'partsmontapi/api/product';
-  final String urlProductlist = 'partsmontapi/api/productList';
+  final String urlProduct = '4dministraci0n/api/get-products-sucursal';
+  final String urlProductSearch = '4dministraci0n/api/get-products-search';
+  final String urlProductByCategory = '4dministraci0n/api/products-by-category';
 
-  final String urlCategory = 'partsmontapi/api/category';
+  final String urlCategory = '4dministraci0n/api/categories-api-all';
 
   final String urlEditProfile = "partsmontapi/api/user/update";
   final String urlGetDateProfile = "partsmontapi/api/user/edit";

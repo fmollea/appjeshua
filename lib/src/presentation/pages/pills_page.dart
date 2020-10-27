@@ -1,3 +1,4 @@
+import 'package:appjeshua/src/commons/search_delegate.dart';
 import 'package:appjeshua/src/core/models/product.dart';
 import 'package:appjeshua/src/core/services/apiProduct.dart';
 import 'package:appjeshua/src/presentation/widget/carousel_widget.dart';
@@ -26,6 +27,12 @@ class _PillsPageState extends State<PillsPage> {
           ),
           actions: <Widget>[
             IconButton(
+              icon: Icon(Icons.search, color: Colors.white),
+              onPressed: () {
+                showSearch(context: context, delegate: DataSearch());
+              },
+            ),
+            IconButton(
               icon: Icon(Icons.shopping_cart, color: Colors.white),
               onPressed: navToCart,
             )
@@ -52,7 +59,7 @@ class _PillsPageState extends State<PillsPage> {
   _drawGrid() {
     final apiProduct = ApiProduct();
     return FutureBuilder(
-      future: apiProduct.getProducts(),
+      future: apiProduct.getProducts(1),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         List<Product> list;
         if (snapshot.data != null) {
@@ -66,7 +73,6 @@ class _PillsPageState extends State<PillsPage> {
   _imageBanner() {
     return SliverList(
         delegate: SliverChildListDelegate([
-      SearchWidget(),
       CarouselWidget(
         items: [
           Image(image: AssetImage('assets/slidedemo.png'), fit: BoxFit.fill),

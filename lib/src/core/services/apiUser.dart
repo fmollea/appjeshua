@@ -43,22 +43,6 @@ class ApiUser {
     return responseDto;
   }
 
-  getUserInfo() async {
-    final url = Uri.http(api.urlBase, api.urlGetDateProfile);
-
-    final response = await http.get(
-      url,
-      headers: {HttpHeaders.authorizationHeader: user.token},
-    );
-    final decodedData = json.decode(response.body);
-
-    final responseDto = ResponseDto.fromJson(decodedData);
-
-    if (NetworkUtils.isReqSuccess(responseDto.code)) {
-      user.getInfoUser(decodedData['user']);
-    }
-  }
-
   Future<ResponseDto> forgetPassword(String email) async {
     // TODO eliminar comentarios y poner api correcta
     /*

@@ -70,7 +70,7 @@ class _ProfilePageState extends State<ProfilePage> implements ProfilePageView {
             children: <Widget>[
               CircleImage('assets/img_persona.png', 90, 90),
               Text(' ', style: TextStyle(fontSize: 12.0)),
-              Text('Alonso López', // TODO quitar comentario user.name,
+              Text(user.name,
                   style: TextStyle(
                       color: Utils.primaryColor,
                       fontSize: 20.0,

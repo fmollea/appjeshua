@@ -1,42 +1,39 @@
 class Product {
   int id;
   String name;
-  String code;
-  String brandId;
+  String sku;
   String description;
   String path;
   String stock;
   String price;
-  String pricePublic;
-  bool isFav;
+  String slug;
   bool isAvaiable;
+  bool isFav;
 
   Product.fromJson(Map<String, dynamic> snapshot) {
     id = snapshot['id'];
     name = snapshot['name'];
-    code = snapshot['code'];
-    brandId = snapshot['brand_id'];
+    sku = snapshot['sku'];
     description = snapshot['description'];
-    path = snapshot['path'];
-    price = snapshot['precio'];
-    pricePublic = snapshot['precio_pub'];
-    stock = snapshot['cantidad'];
-    isFav = snapshot['is_fav'];
-    isAvaiable = snapshot['is_avaiable'];
+    path = snapshot['coverImage'];
+    price = snapshot['precio'] == null ? '0' : snapshot['precio'];
+    slug = snapshot['slug'];
+    stock = snapshot['stock'] == null ? '0' : snapshot['stock'];
+    isFav = snapshot['is_fav'] == null ? false : snapshot['is_fav'];
+    isAvaiable = int.parse(stock) > 0;
   }
 
   Product(
       this.id,
       this.name,
-      this.code,
-      this.brandId,
+      this.sku,
       this.description,
       this.stock,
       this.price,
-      this.pricePublic,
       this.path,
-      this.isFav,
-      this.isAvaiable);
+      this.slug,
+      this.isAvaiable,
+      this.isFav);
 }
 
 class Products {

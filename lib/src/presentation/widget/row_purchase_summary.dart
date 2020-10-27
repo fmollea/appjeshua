@@ -44,7 +44,7 @@ class _RowPurchaseSummaryState extends State<RowPurchaseSummary> {
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold)),
                     Text('', style: TextStyle(fontSize: 8.0)),
-                    Text("Código: " + _cart.product.code,
+                    Text("Código: " + _cart.product.sku,
                         style:
                             TextStyle(color: Colors.black54, fontSize: 16.0)),
                     Text('', style: TextStyle(fontSize: 8.0)),

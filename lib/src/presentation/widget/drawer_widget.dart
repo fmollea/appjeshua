@@ -62,18 +62,18 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Alonso López',
+                _user.name,
                 style: TextStyle(
                     color: Utils.primaryColor,
                     fontSize: 18.0,
                     fontWeight:
-                        FontWeight.bold), /*TODO descomentar  _user.name*/
+                        FontWeight.bold),
               ),
               Text(
-                'alopez@test.com',
+                _user.email,
                 style: TextStyle(
                     color: Utils.primaryColor,
-                    fontSize: 16.0), /*TODO descomentar  _user.name*/
+                    fontSize: 16.0),
               ),
             ],
           ),

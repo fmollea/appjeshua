@@ -12,8 +12,7 @@ class DataProduct {
   int to;
   int total;
 
-  DataProduct.fromJson(Map<String, dynamic> snapshot) {
-    currentPage = snapshot['current_page'];
-    products = Products.fromJsonList(snapshot['data']);
+  DataProduct.fromJson(List<dynamic> snapshot) {
+    products = Products.fromJsonList(snapshot);
   }
 }

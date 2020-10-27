@@ -11,26 +11,20 @@ class ApiLogin {
   final String _password = 'password';
 
   Future<LoginDto> postLogin(String email, String pass) async {
-    // TODO quitar este comment
-    /*
+
     final url =
-        Uri.http(api.urlBase, api.urlLogin, {_email: email, _password: pass});
+        Uri.https (api.urlBase, api.urlLogin, {_email: email, _password: pass});    
 
-    final response = await http.post(url);
-    final decodedData = json.decode(response.body);
+    try {
+      final response = await http.post(url);
+      final decodedData = json.decode(response.body);
+      final loginDto = LoginDto.fromJson(decodedData);
 
-    final loginDto = LoginDto.fromJson(decodedData);
-    */
+      return loginDto;
+    } catch (e) {
+      final loginDto = LoginDto.fromJson(null);
 
-    var decodedData = {
-      'status': 'ok',
-      'code': 200,
-      'message': 'ok',
-      'data': {'token': '111'}
-    };
-
-    final loginDto = LoginDto.fromJson(decodedData);
-
-    return loginDto;
+      return loginDto;
+    }
   }
 }

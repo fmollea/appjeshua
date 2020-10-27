@@ -1,22 +1,25 @@
-import 'package:appjeshua/src/commons/NetworkUtils.dart';
 import 'package:appjeshua/src/core/models/user.dart';
 
 class LoginDto {
-  String status;
   int code;
-  String message;
+  final user = User();
 
-  LoginDto(this.status, this.code, this.message);
+  LoginDto(this.code);
 
   LoginDto.fromJson(Map<String, dynamic> snapshot) {
-    status = snapshot['status'];
-    code = snapshot['code'];
-    message = snapshot['message'];
-    if (NetworkUtils.isReqSuccess(code)) getAccesToken(snapshot['data']);
+
+    if (snapshot == null || snapshot['access_token'] == null) {
+      code = 400;
+    } else {
+      code = 200;
+      user.token = snapshot['access_token'];
+      getUserInfo(snapshot['user']);
+    }
   }
 
-  getAccesToken(Map<String, dynamic> snapshot) {
-    final user = User();
-    user.token = snapshot['token'];
+  getUserInfo(Map<String, dynamic> snapshot) {
+    user.name = snapshot['fullname']; 
+    user.email = snapshot['email'];
+    user.idSucursal = snapshot['sucursal'];
   }
 }

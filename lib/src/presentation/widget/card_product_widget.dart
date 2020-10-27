@@ -38,14 +38,15 @@ class _CardProductWidgetState extends State<CardProductWidget> {
   Widget _drawChild() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [_drawHeader(), _drawContent(), _drawFooter()],
+      children: [_drawHeader(),Container(height: 4.0), _drawContent(), _drawFooter()],
     );
   }
 
   Widget _drawHeader() {
+    final path = item.path == 'no-photo.png' ? 'assets/not_found.png' : item.path; 
     return FadeInImage.assetNetwork(
         placeholder: 'assets/not_found.png',
-        image: item.path,
+        image: path,
         width: 100,
         height: 100,
         fit: BoxFit.fill);
@@ -67,55 +68,19 @@ class _CardProductWidgetState extends State<CardProductWidget> {
           Container(
             height: 8.0,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '\$' + item.price,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.lightBlue[800],
-                    fontSize: 18,
-                    fontFamily: 'Roboto'),
-              ),
-              Text(
-                '\$' + item.pricePublic,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.lightBlue[800],
-                    fontSize: 18,
-                    fontFamily: 'Roboto'),
-              ),
-            ],
-          ),
-          Container(
-            height: 4.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Neto',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.lightBlue[800],
-                    fontSize: 14,
-                    fontFamily: 'Roboto'),
-              ),
-              Text(
-                'Público',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.lightBlue[800],
-                    fontSize: 14,
-                    fontFamily: 'Roboto'),
-              ),
-            ],
+          Text(
+            '\$' + item.price,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.lightBlue[800],
+                fontSize: 18,
+                fontFamily: 'Roboto'),
           ),
         ],
       ),
     );
   }
+
 
   _drawFooter() {
     return Row(
@@ -135,6 +100,7 @@ class _CardProductWidgetState extends State<CardProductWidget> {
       ],
     );
   }
+  
 
   _favourite() {
     return InkResponse(

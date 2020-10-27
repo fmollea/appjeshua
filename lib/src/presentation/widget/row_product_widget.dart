@@ -26,12 +26,14 @@ class _RowProductWidgetState extends State<RowProductWidget> {
   }
 
   Widget _drawCard(BuildContext context) {
+    final path = item.path == 'no-photo.png' ? 'assets/not_found.png' : item.path;  
+
     return InkResponse(
       child: Card(
           child: Row(children: <Widget>[
         FadeInImage.assetNetwork(
             placeholder: 'assets/not_found.png',
-            image: item.path,
+            image: path,
             width: 100,
             height: 100,
             fit: BoxFit.fill),
@@ -41,7 +43,7 @@ class _RowProductWidgetState extends State<RowProductWidget> {
                 child: Center(
                     child: ListTile(
                         title: Text(item.name),
-                        subtitle: Text("Código " + item.code),
+                        subtitle: Text("Código " + item.sku),
                         trailing: _favourite()))))
       ])),
       onTap: () => _onTileClicked(item.id),

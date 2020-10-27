@@ -39,19 +39,19 @@ class _MainPageState extends State<MainPage> {
       items: [
         BottomNavigationBarItem(
           icon: new Icon(FlutterIcons.pill_mco),
-          title: new Text('', style: TextStyle(fontSize: 0)),
+          label: ''
         ),
         BottomNavigationBarItem(
           icon: new Icon(FlutterIcons.person_outline_mdi),
-          title: new Text('', style: TextStyle(fontSize: 0)),
+          label: ''
         ),
         BottomNavigationBarItem(
           icon: new Icon(FlutterIcons.favorite_border_mdi),
-          title: new Text('', style: TextStyle(fontSize: 0)),
+          label: ''
         ),
         BottomNavigationBarItem(
           icon: new Icon(FlutterIcons.phone_call_fea),
-          title: new Text('', style: TextStyle(fontSize: 0)),
+          label: ''
         ),
       ],
     );

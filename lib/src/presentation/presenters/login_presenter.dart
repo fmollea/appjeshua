@@ -1,13 +1,11 @@
 import 'package:appjeshua/src/commons/NetworkUtils.dart';
 import 'package:appjeshua/src/core/models/loginDto.dart';
 import 'package:appjeshua/src/core/services/apiLogin.dart';
-import 'package:appjeshua/src/core/services/apiUser.dart';
 import 'package:appjeshua/src/presentation/pagesviews/login_page_view.dart';
 import 'package:appjeshua/src/presentation/presenters/base_presenter.dart';
 
 class LoginPresenter extends BasePresenter<LoginPageView> {
   ApiLogin _apiLogin = ApiLogin();
-  ApiUser _apiUser = ApiUser();
   String name = "";
   String password = "";
 
@@ -31,7 +29,6 @@ class LoginPresenter extends BasePresenter<LoginPageView> {
 
   onSuccessLogin(String path) async {
     if (isViewAttached) {
-      await _apiUser.getUserInfo();
       getView().hideLoading();
       navToPage(path);
     }

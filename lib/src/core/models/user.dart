@@ -10,6 +10,7 @@ class User {
   String token;
   String name;
   String email;
+  int idSucursal;
   int deliveryId;
   int paymentId;
   int billingId;

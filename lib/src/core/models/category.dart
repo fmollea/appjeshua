@@ -1,22 +1,18 @@
 class Category {
   int id;
   String name;
-  String status;
+  String slug;
   String image;
-  String createdAt;
-  String updatedAt;
 
   Category.fromJson(Map<String, dynamic> snapshot) {
     id = snapshot['id'];
     name = snapshot['name'];
-    status = snapshot['status'];
+    slug = snapshot['slug'];
     image = snapshot['image'];
-    createdAt = snapshot['created_at'];
-    updatedAt = snapshot['updated_at'];
   }
 
-  Category(this.id, this.name, this.status, this.image, this.createdAt,
-      this.updatedAt);
+
+  Category(this.id, this.name, this.slug, this.image);
 }
 
 class Categories {
