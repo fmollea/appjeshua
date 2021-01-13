@@ -45,7 +45,7 @@ class PurchaseConfirmationPage extends StatelessWidget {
                   title: Text(
                       'Es necesario que después de realizar el pago mandar el comprobante a:',
                       style: TextStyle(color: Colors.black54, fontSize: 18.0)),
-                  subtitle: Text('info@jesuamedic.com',
+                  subtitle: Text('info@farmater.com',
                       style:
                           TextStyle(color: Utils.primaryColor, fontSize: 16.0)),
                   leading: Icon(Icons.mail_outline, color: Utils.redColor))),

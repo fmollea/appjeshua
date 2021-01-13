@@ -7,17 +7,13 @@ class HelpPage extends StatefulWidget {
 }
 
 class _HelpPageState extends State<HelpPage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.help_outline, color: Colors.white),
         centerTitle: true,
-        title: Text(Utils.titleContact,
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold)),
+        title: Text(Utils.titleContact, style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold)),
       ),
       body: drawScreen(),
     );
@@ -28,18 +24,13 @@ class _HelpPageState extends State<HelpPage> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        /* TODO quitar cooment y poner otra url
-        FadeInImage.memoryNetwork(
-          height: 150,
-          placeholder: kTransparentImage,
-          image: 'https://www.partsmont.com/slide/slidepromoapp.png',
-          fit: BoxFit.fill,
-        ),*/
-        drawHeader(),
+      //  Padding(
+      //    padding: const EdgeInsets.only(top:48.0, bottom: 32),
+      //    child: Image.asset('assets/help.png'),
+      //  ),
         drawText('Preguntas frecuentes', 'frequent_questions_page'),
         drawDivider(),
-        drawTile(
-            'Contáctanos', '¿Preguntas? ¿Necesitas ayuda?', 'contact_web_page'),
+        drawText('Contáctanos', 'contact_web_page'),
         drawDivider(),
         drawText('Términos y privacidad', 'terms_privacy_page'),
         drawDivider(),
@@ -49,17 +40,19 @@ class _HelpPageState extends State<HelpPage> {
   }
 
   drawHeader() {
-    return Image(image: AssetImage('assets/slideayuda.png'), fit: BoxFit.fill);
+    return Row(mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Image(image: AssetImage('assets/banner.png'), fit: BoxFit.fitWidth),
+        ]
+    );
   }
 
   drawTile(String title, String subtitle, String path) {
     return Container(
         padding: EdgeInsets.only(left: 32),
         child: ListTile(
-          title: Text(title,
-              style: TextStyle(color: Colors.black87, fontSize: 18.0)),
-          subtitle: Text(subtitle,
-              style: TextStyle(color: Colors.black54, fontSize: 16.0)),
+          title: Text(title, style: TextStyle(color: Colors.black87, fontSize: 18.0)),
+          subtitle: Text(subtitle, style: TextStyle(color: Colors.black54, fontSize: 16.0)),
           onTap: () {
             navToPage(path);
           },
@@ -70,8 +63,7 @@ class _HelpPageState extends State<HelpPage> {
     return Container(
         padding: EdgeInsets.only(left: 32),
         child: ListTile(
-          title: Text(text,
-              style: TextStyle(color: Colors.black87, fontSize: 18.0)),
+          title: Text(text, style: TextStyle(color: Colors.black87, fontSize: 18.0)),
           onTap: () {
             navToPage(path);
           },

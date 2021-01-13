@@ -2,7 +2,7 @@ import 'package:appjeshua/src/commons/Utils.dart';
 import 'package:appjeshua/src/core/models/user.dart';
 import 'package:appjeshua/src/presentation/pagesviews/profile_page_view.dart';
 import 'package:appjeshua/src/presentation/presenters/profile_presenter.dart';
-import 'package:appjeshua/src/presentation/widget/circle_image.dart';
+import 'package:appjeshua/src/presentation/widget/circle_image_widget.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -13,6 +13,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> implements ProfilePageView {
   Utils _utils;
   ProfilePresenter _presenter;
+  User _user;
 
   @override
   void initState() {
@@ -20,13 +21,13 @@ class _ProfilePageState extends State<ProfilePage> implements ProfilePageView {
     _presenter = ProfilePresenter();
     _presenter.attachView(this);
     _utils = Utils();
+    _user = User();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.person_pin, color: Colors.white),
         centerTitle: true,
         title: Text(Utils.titleProfile,
             style: TextStyle(
@@ -39,44 +40,41 @@ class _ProfilePageState extends State<ProfilePage> implements ProfilePageView {
   }
 
   drawScreen() {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        drawHeader(),
-        drawOptions('Historial de pedidos', 'history', 'history_order_page'),
-        drawDivider(),
-        drawOptions('Direcciones de envío', 'shipping_address',
-            'profile_delivery_page'),
-        drawDivider(),
-        drawOptions('Direcciones de facturación', 'billing_address',
-            'profile_billings_page'),
-        drawDivider(),
-        drawOptions('Datos personales', 'person', 'personal_info_page'),
-      ],
+    return SingleChildScrollView(
+        child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          drawHeader(),
+          drawOptions('Historial de pedidos', 'history', 'history_order_page'),
+          drawDivider(),
+          drawOptions('Datos personales', 'person', 'details_profile'),
+          drawDivider(),
+          drawOptions('Lista de deseos', 'not_fav', 'favorite_page'),
+        ],
+      ),
     );
   }
 
   drawHeader() {
-    final user = User();
     return Container(
         padding: EdgeInsets.only(top: 36, bottom: 20),
         decoration: BoxDecoration(
-          color: Colors.grey[350],
+          color: Colors.white,
         ),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
           Column(
             children: <Widget>[
-              CircleImage('assets/img_persona.png', 90, 90),
+              CircleImageWidget(path: getImagePath(), width: 90, height: 90),
               Text(' ', style: TextStyle(fontSize: 12.0)),
-              Text(user.name,
+              Text(
+                  _user.name,
                   style: TextStyle(
-                      color: Utils.primaryColor,
+                      color: Utils.redColor,
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold)),
               Text(' ', style: TextStyle(fontSize: 8.0)),
-              _textEditProfile('edit_profile', 'Editar perfil')
             ],
           )
         ]));
@@ -86,7 +84,7 @@ class _ProfilePageState extends State<ProfilePage> implements ProfilePageView {
     return Container(
       padding: EdgeInsets.only(left: 32),
       child: ListTile(
-        leading: _utils.getIcon(icon, Utils.redColor),
+        leading: _utils.getIcon(icon, Colors.grey[600]),
         title: Text(title,
             style: TextStyle(color: Colors.black54, fontSize: 18.0)),
         onTap: () {
@@ -102,18 +100,13 @@ class _ProfilePageState extends State<ProfilePage> implements ProfilePageView {
         child: Divider(color: Colors.grey, height: 2.0));
   }
 
-  Widget _textEditProfile(String path, String text) {
-    return InkResponse(
-      child:
-          Text(text, style: TextStyle(color: Colors.black45, fontSize: 18.0)),
-      onTap: () {
-        _presenter.navToPage(path);
-      },
-    );
-  }
-
   @override
   navToPage(String path) {
     Navigator.pushNamed(context, path);
+  }
+
+  String getImagePath() {
+    if (_user.image == null) return null;
+    else return Utils.getPerfilImage(_user.image, _user.userId);
   }
 }

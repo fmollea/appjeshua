@@ -6,15 +6,17 @@ class TextInputWidget extends StatelessWidget {
   final TextInputType type;
   final TextEditingController controller;
   final Widget prefixIcon;
+  final bool isEnabled;
 
   TextInputWidget(
-      {this.text, this.isPass, this.type, this.controller, this.prefixIcon});
+      {this.text, this.isPass, this.type, this.controller, this.prefixIcon, this.isEnabled = true});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 16),
       child: TextField(
+        enabled: isEnabled,
         style: TextStyle(color: Colors.black87),
         obscureText: isPass,
         controller: controller,

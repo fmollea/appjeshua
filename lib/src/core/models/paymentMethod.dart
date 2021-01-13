@@ -1,15 +1,13 @@
 class PaymentMethod {
   int id;
   String name;
-  String description;
   int status;
   bool isSelected;
 
   PaymentMethod.fromJson(Map<String, dynamic> snapshot) {
     id = snapshot['id'];
     name = snapshot['name'];
-    description = snapshot['description'];
-    status = int.parse(snapshot['status']);
+    status = snapshot['status'];
     isSelected = false;
   }
 }

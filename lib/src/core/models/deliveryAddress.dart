@@ -1,52 +1,42 @@
 class DeliveryAddress {
-  int id;
-  String name;
-  String days;
-  String address;
+
+  DeliveryAddress._private();
+
+  static final DeliveryAddress _instance = DeliveryAddress._private();
+
+  factory DeliveryAddress() {
+    return _instance;
+  }
+
+  String street;
   String city;
-  String postalCode;
-  String additional;
-  int isDefault;
-  String stateId;
-  String customerId;
+  String colony;
+  String country;
+  String inside;
+  String outside;
+  String postal;
+  String state;
 
-  DeliveryAddress.fromJson(Map<String, dynamic> snapshot) {
-    id = snapshot['id'];
-    name = snapshot['name'];
-    days = snapshot['days'];
-    address = snapshot['address'];
-    city = snapshot['city'];
-    postalCode = snapshot['postal_code'];
-    additional = snapshot['additional'];
-    isDefault = int.parse(snapshot['default']);
-    stateId = snapshot['state_id'];
-    customerId = snapshot['customer_id'];
-  }
+  Map<String, dynamic> toJson() => {
+        "city": city,
+        "colony": colony,
+        "country": country,
+        "exterior": outside,
+        "interior": inside,
+        "postal": postal,
+        "state": state,
+        "street": street,
+    };
 
-  DeliveryAddress(
-      this.id,
-      this.name,
-      this.days,
-      this.address,
-      this.city,
-      this.postalCode,
-      this.additional,
-      this.isDefault,
-      this.stateId,
-      this.customerId);
-}
+ changeNullToEmpty() {
+    city = city == null ? "" : city;
+    colony = colony == null ? "" : colony;
+    country = country == null ? "" : country;
+    outside = outside == null ? "" : outside;
+    inside = inside == null ? "" : inside;
+    postal = postal == null ? "" : postal;
+    state = state == null ? "" : state;
+    street = street == null ? "" : street;
+ } 
 
-class DeliveryAddresses {
-  List<DeliveryAddress> list = List();
-
-  DeliveryAddresses();
-
-  DeliveryAddresses.fromJsonList(List<dynamic> jsonList) {
-    if (jsonList == null) return;
-
-    jsonList.forEach((item) {
-      final deliveryAddress = DeliveryAddress.fromJson(item);
-      list.add(deliveryAddress);
-    });
-  }
 }

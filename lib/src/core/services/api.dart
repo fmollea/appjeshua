@@ -9,34 +9,27 @@ class Api {
   final String urlProduct = '4dministraci0n/api/get-products-sucursal';
   final String urlProductSearch = '4dministraci0n/api/get-products-search';
   final String urlProductByCategory = '4dministraci0n/api/products-by-category';
+  final String urlProductDetail = '4dministraci0n/api/products-api-show';
 
   final String urlCategory = '4dministraci0n/api/categories-api-all';
+  final String urlPaymentMethods = "4dministraci0n/api/get-payment-methods";
 
-  final String urlEditProfile = "partsmontapi/api/user/update";
-  final String urlGetDateProfile = "partsmontapi/api/user/edit";
+  final String urlOrder = "4dministraci0n/api/orders-by-users";
 
-  final String urlAddCart = "partsmontapi/api/cart/add";
-  final String urlGetProductCart = "partsmontapi/api/carts";
-  final String urlCart = "partsmontapi/api/cart";
+  final String urlInfoOrder = '4dministraci0n/api/get-info-orders';
+  final String urlEditProfile = '4dministraci0n/api/users';
 
-  final String urlFavourite = "partsmontapi/api/favorites";
-  final String urlAddFavourite = "partsmontapi/api/favorites/store";
+  final String urlUpdateFavourite = "4dministraci0n/api/updateFavorites"; //to use for add and delete
+  final String urlGetFavourite = "4dministraci0n/api/getFavorites";
 
-  final String urlDeliveryAddress = "partsmontapi/api/deliveryAddress";
-  final String urlAddDeliveryAddress = "partsmontapi/api/deliveryAddress/add";
-  final String urlUpdateDeliveryAddress = "partsmontapi/api/deliveryAddress/update";
+  final String urlAddCart = "4dministraci0n/api/addToCar";
+  final String urlGetProductCart = "4dministraci0n/api/getCar";
+  final String urlDeleteCart = "4dministraci0n/api/deleteToCar";
+  final String urlEmptyCart = "4dministraci0n/api/deleteToAllCar";
 
-  final String urlBillingAddress = "partsmontapi/api/billingAddress";
-  final String urlAddBillingAddress = "partsmontapi/api/billingAddress/add";
-  final String urlUpdateBillingAddress = "partsmontapi/api/billingAddress/update";
+  final String urlPaymentProcess = "4dministraci0n/api/orders-api";
 
-  final String urlPaymentProcess = "partsmontapi/api/cart/payment";
-  final String urlPaymentMethods = "partsmontapi/api/cart/paymentMethods";
-
-  final String urlOrder = "partsmontapi/api/orders";
-
-  final String urlBrand = "partsmontapi/api/brand";
-  final String urlModel = "partsmontapi/api/model";
+  final String urlNotifications = "4dministraci0n/api/data-notifications";
 
 
 }

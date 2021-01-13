@@ -8,12 +8,19 @@ class ProductsListPage extends StatefulWidget {
 
 class _ProductsListPageState extends State<ProductsListPage> {
   Map<String, String> _params;
+  
+  String title = "Listado de productos";
 
   @override
   Widget build(BuildContext context) {
     _params = ModalRoute.of(context).settings.arguments;
+
+    if (_params != null && _params.containsKey('title')) {
+        title = _params['title'];
+    }
+
     return Scaffold(
-      appBar: AppBar(title: Text('Listado de productos')),
+      appBar: AppBar(title: Text(title)),
       body: Stack(children: <Widget>[ContentListProduct(params: _params)]),
     );
   }

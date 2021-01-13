@@ -1,3 +1,5 @@
+import 'package:appjeshua/src/core/models/cart.dart';
+
 class User {
   User._private();
 
@@ -8,21 +10,32 @@ class User {
   }
 
   String token;
+  int userId;
   String name;
   String email;
+  String image;
   int idSucursal;
   int deliveryId;
   int paymentId;
+  String payment;
   int billingId;
+  List<Cart> carts;
+  int cantCarts;
+  String lastOrder;
+  String date;
+  String idOrder;
+  String tokenFcm;
+  String filterUrl;
 
-  getInfoUser(Map<String, dynamic> snapshot) {
-    // TODO eliminar comment
-    /*
-    final map = snapshot['data'];
-    this.name = map['username'];
-    this.email = map['email']; */
+  String obtainTotal() {
+    var _totalAmount = 0.0;
+    carts.forEach((element) {
+      _totalAmount =
+          _totalAmount + element.quantity * double.parse(element.product.price);
+    });
 
-    this.name = 'TEST';
-    this.email = 'test@gmal.com';
+    return _totalAmount.toStringAsFixed(2);
   }
+
+  int cantProducts() => carts.toList().length;
 }

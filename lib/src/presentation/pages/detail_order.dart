@@ -2,33 +2,42 @@ import 'package:appjeshua/src/commons/Utils.dart';
 import 'package:appjeshua/src/core/models/billingAddress.dart';
 import 'package:appjeshua/src/core/models/deliveryAddress.dart';
 import 'package:appjeshua/src/core/models/user.dart';
-import 'package:appjeshua/src/presentation/widget/button_widget.dart';
+import 'package:appjeshua/src/core/services/apiOrder.dart';
 import 'package:appjeshua/src/presentation/widget/row_product_order.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class PurchaseMadePage extends StatelessWidget {
-  final _user = User();
-  final _shipping = DeliveryAddress();
-  final _billing = BillingAddress();
+class DetailOrder extends StatelessWidget {
 
+  User _user = User();
+  DeliveryAddress _shipping = DeliveryAddress();
+  BillingAddress _billing = BillingAddress(); 
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Resumen de compra",
+          title: Text("Detalle de pedido",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold)),
         ),
-        body: _drawScreen(context),
-        bottomNavigationBar: _drawBottom(context));
-
+        body: _drawScreen());
   }
 
-  _drawScreen(BuildContext context) {
-    return _drawContent(context);
+  _drawScreen() {
+    final apiOrder = ApiOrder();
+    return FutureBuilder(
+      future: apiOrder.getDetail(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          return _drawContent(context);
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
   }
 
   _drawContent(BuildContext context) {
@@ -102,13 +111,13 @@ class PurchaseMadePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${_user.name}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+            Text('${_user.name}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
             Container(height: 8),
-            Text('  ${_shipping.street}, ${_shipping.inside}, ${_shipping.outside}', style: TextStyle(fontSize: 18)),
-            Text('  ${_shipping.colony}, ${_shipping.city}', style: TextStyle(fontSize: 18)),
-            Text('  C.P. ${_shipping.postal}', style: TextStyle(fontSize: 18)),
+            Text('  ${_shipping.street}, ${_shipping.inside}, ${_shipping.outside}'),
+            Text('  ${_shipping.colony}, ${_shipping.city}'),
+            Text('  C.P. ${_shipping.postal}'),
             Container(height: 4),
-            Text('  ${_user.email}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Utils.primaryColor)),
+            Text('  ${_user.email}', style: TextStyle(fontWeight: FontWeight.bold, color: Utils.primaryColor)),
           ],
         ),
       ),
@@ -126,34 +135,22 @@ class PurchaseMadePage extends StatelessWidget {
           children: [
             Row(
               children: [
-                Expanded(child: Text('  RFC: ${_billing.rfc}', style: TextStyle(fontSize: 18))),
+                Expanded(child: Text('  RFC: ${_billing.rfc}')),
               ],
             ),
-            Text('  ${_billing.street}, ${_billing.inside}, ${_billing.outside}', style: TextStyle(fontSize: 18)),
-            Text('  ${_billing.colony}, ${_billing.city}', style: TextStyle(fontSize: 18)),
-            Text('  C.P. ${_billing.postal}', style: TextStyle(fontSize: 18)),
+            Text('  ${_billing.street}, ${_billing.inside}, ${_billing.outside}'),
+            Text('  ${_billing.colony}, ${_billing.city}'),
+            Text('  C.P. ${_shipping.postal}'),
           ],
         ),
       ),
     );
   }
 
-  _drawBottom(BuildContext context) => 
-    Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Card(elevation: 4,
-          child: Container(
-              padding: EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 24),
-              color: Colors.white,
-              child: ButtonWidget(() {
-          Navigator.of(context).pushNamedAndRemoveUntil(
-            'main_page', ModalRoute.withName('login'));
-          }, Utils.primaryColor, "Seguir Comprando"),
-      )),
-    );
+  
 
-    String _getDateFormat() => DateFormat('dd-MM-yyyy')
-      .format(DateTime.now());
+  String _getDateFormat() => DateFormat('dd-MM-yyyy')
+    .format(DateTime.now());
 
   _titleSection(String text) {
     return Padding(

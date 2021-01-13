@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:appjeshua/src/core/models/product.dart';
-import 'package:appjeshua/src/core/models/productDto.dart';
 import 'package:appjeshua/src/core/models/user.dart';
 import 'package:appjeshua/src/core/services/api.dart';
 import 'package:http/http.dart' as http;
@@ -13,74 +12,72 @@ class ApiProduct {
   final String _page = 'page';
 
   Future<Products> getProducts(int page) async {
-    var productDto = Products();
+    var products = Products();
 
     final params = {
       _page: page.toString(),
     };
 
-    final buildPath = '${api.urlProduct}/${user.idSucursal}';
+    final buildPath = '${api.urlProduct}/${user.idSucursal}/${user.userId}';
     final url = Uri.https(api.urlBase, buildPath, params);
 
     final response = await http.get(url);
     final decodedData = json.decode(response.body);
 
     if (decodedData['data'] == null) {
-      productDto = Products.fromJsonList(null);
+      products = Products.fromJsonList(null);
     } else {
-      productDto = Products.fromJsonList(decodedData['data']);
+      products = Products.fromJsonList(decodedData['data']);
     }
 
-    return productDto;
+    return products;
   }
 
   Future<Products> searchProductsByCategory(
       String slugCategory, int page) async {
 
-    var productDto = ProductDto();
+    var products = Products();
 
     final params = {
       _page: page.toString(),
     };
 
-    final buildPath = '${api.urlProductByCategory}/$slugCategory/${user.idSucursal}';
+    final buildPath = '${api.urlProductByCategory}/$slugCategory/${user.idSucursal}/${user.userId}';
     final url = Uri.https(api.urlBase, buildPath, params);
 
     final response = await http.get(url);
     final decodedData = json.decode(response.body);
 
     if (decodedData['data'] == null) {
-      productDto = ProductDto.fromJson(null);
+      products = Products.fromJsonList(null);
     } else {
-      productDto = ProductDto.fromJson(decodedData['data']);
+      products = Products.fromJsonList(decodedData['data']);
     }
 
-    return productDto.data.products;
+    return products;
   }
 
   Future<Products> searchProductsByQueryParam(
       String query, int perpage) async {
 
-    final buildPath = '${api.urlProductSearch}/$query/$perpage/null/${user.idSucursal}';
+    final buildPath = '${api.urlProductSearch}/$query/$perpage/null/${user.idSucursal}/${user.userId}';
 
     final url = Uri.https(api.urlBase, buildPath);
     final response = await http.get(url);
     final decodedData = json.decode(response.body);
-    final productDto = Products.fromJsonList(decodedData);
+    final products = Products.fromJsonList(decodedData);
 
-    return productDto;
+    return products;
   }
 
-  Future<Product> showProduct(int id) async {
-    /*
-    final path = api.urlProduct + '/' + id.toString() + '/show';
-    final url = Uri.http(api.urlBase, path);
-    final response = await http
-        .get(url, headers: {HttpHeaders.authorizationHeader: user.token});
+  Future<Product> showProduct(String slugProduct) async {
+    final buildPath = '${api.urlProductDetail}/$slugProduct/${user.userId}';
+    final url = Uri.https(api.urlBase, buildPath);
+    final response = await http.get(url);
+
     final decodedData = json.decode(response.body);
-    final product = Product.fromJson(decodedData['product']);
-    */
-    final productDto = Products.fromJsonList(data);
-    return productDto.list[0];
+    final product = Product.fromJson(decodedData['items']);
+
+    return product;
   }
 }

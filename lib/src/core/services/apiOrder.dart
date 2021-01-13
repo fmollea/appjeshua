@@ -11,35 +11,22 @@ class ApiOrder {
   User user = User();
 
   Future<Orders> getOrders() async {
-    /*
-    final url = Uri.http(api.urlBase, api.urlOrder);
+    final buildPath = '${api.urlOrder}/${user.userId}';
+    final url = Uri.https(api.urlBase, buildPath);
 
-    final response = await http
-        .get(url, headers: {HttpHeaders.authorizationHeader: user.token});
+    final response = await http.get(url);
     final decodedData = json.decode(response.body);
-    final order = Orders.fromJsonList((decodedData['orders'])['data']);
-    return order; */
-    var data = [
-      {
-        'id': 1,
-        'total': '700',
-        'subtotal': '550',
-        'status': 'abierto',
-        'open': 'si',
-        'paid': 'no',
-        'created_at': 'a'
-      },
-      {
-        'id': 1,
-        'total': '7000',
-        'subtotal': '5500',
-        'status': 'cerrado',
-        'open': 'no',
-        'created_at': 'a',
-        'paid': 'si',
-      }
-    ];
+    final order = Orders.fromJsonList(decodedData);
+    return order; 
+  }
 
-    return Orders.fromJsonList(data);
+  Future<bool> getDetail() async {
+    final buildPath = '${api.urlOrder}/${user.userId}';
+    final url = Uri.https(api.urlBase, buildPath);
+
+    final response = await http.get(url);
+    final decodedData = json.decode(response.body);
+    Orders.fromJsonDetail(decodedData);
+    return true; 
   }
 }

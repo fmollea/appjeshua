@@ -1,58 +1,53 @@
 class BillingAddress {
-  int id;
-  String rfc;
-  String businessName;
+
+  BillingAddress._private();
+
+  static final BillingAddress _instance = BillingAddress._private();
+
+  factory BillingAddress() {
+    return _instance;
+  }  
+
   String type;
-  String address;
+  String street;
   String city;
-  String postalCode;
-  String outside;
-  String inside;
-  int isDefault;
-  String stateId;
-  String customerId;
+  String colony;
+  String country;
+  String outside; //exterior
+  String inside; //interior
+  String postal;
+  String razon;
+  String rfc;
+  String state;
+  bool ticket;
 
-  BillingAddress.fromJson(Map<String, dynamic> snapshot) {
-    id = snapshot['id'];
-    rfc = snapshot['rfc'];
-    businessName = snapshot['business_name'];
-    type = snapshot['type'];
-    address = snapshot['address'];
-    city = snapshot['city'];
-    postalCode = snapshot['postal_code'];
-    outside = snapshot['outside'];
-    inside = snapshot['inside'];
-    isDefault = int.parse(snapshot['default']);
-    stateId = snapshot['state_id'];
-    customerId = snapshot['customer_id'];
-  }
+  Map<String, dynamic> toJson() => {
+        "city": city,
+        "colony": colony,
+        "country": country,
+        "exterior": outside,
+        "interior": inside,
+        "postal": postal,
+        "razon": razon,
+        "rfc": rfc,
+        "state": state,
+        "street": street,
+        "type": type,
+        "ticket": ticket,
+    };
 
-  BillingAddress(
-      this.id,
-      this.rfc,
-      this.businessName,
-      this.type,
-      this.address,
-      this.city,
-      this.postalCode,
-      this.outside,
-      this.inside,
-      this.isDefault,
-      this.stateId,
-      this.customerId);
-}
-
-class BillingAddresses {
-  List<BillingAddress> list = List();
-
-  BillingAddresses();
-
-  BillingAddresses.fromJsonList(List<dynamic> jsonList) {
-    if (jsonList == null) return;
-
-    jsonList.forEach((item) {
-      final deliveryAddress = BillingAddress.fromJson(item);
-      list.add(deliveryAddress);
-    });
-  }
+  changeNullToEmpty() {
+    city = city == null ? "" : city;
+    colony = colony == null ? "" : colony;
+    country = country == null ? "" : country;
+    outside = outside == null ? "" : outside;
+    inside = inside == null ? "" : inside;
+    postal = postal == null ? "" : postal;
+    razon = razon == null ? "" : razon;
+    rfc = rfc == null ? "" : rfc;
+    state = state == null ? "" : state;
+    street = street == null ? "" : street;
+    type = type == null ? "" : type;
+    ticket = ticket == null ? false : ticket;
+  }  
 }

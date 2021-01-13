@@ -1,10 +1,8 @@
-import 'package:appjeshua/src/commons/NetworkUtils.dart';
 import 'package:appjeshua/src/commons/Utils.dart';
 import 'package:appjeshua/src/core/models/billingAddress.dart';
-import 'package:appjeshua/src/core/models/responseDto.dart';
-import 'package:appjeshua/src/core/models/user.dart';
-import 'package:appjeshua/src/core/services/apiBillingAddress.dart';
 import 'package:appjeshua/src/presentation/widget/button_widget.dart';
+import 'package:appjeshua/src/presentation/widget/content_billing_address.dart';
+import 'package:appjeshua/src/presentation/widget/milestone_widget.dart';
 import 'package:flutter/material.dart';
 
 class BillingAddressPage extends StatefulWidget {
@@ -13,134 +11,118 @@ class BillingAddressPage extends StatefulWidget {
 }
 
 class _BillingAddressPageState extends State<BillingAddressPage> {
-  final _apiBillingAddress = ApiBillingAddress();
-  BillingAddresses listAddress = BillingAddresses();
-  User user = User();
+  TextEditingController street = TextEditingController();
+  TextEditingController city = TextEditingController();
+  TextEditingController colony = TextEditingController();
+  TextEditingController noInterior = TextEditingController();
+  TextEditingController noExterior = TextEditingController();
+  TextEditingController cdgPostal = TextEditingController();
+  TextEditingController state = TextEditingController();
+  TextEditingController razon = TextEditingController();
+  TextEditingController rfc = TextEditingController();
+  TextEditingController type = TextEditingController();
+  bool ticket = false;
+
+  var address = BillingAddress();
+
+  @override
+  void initState() {
+    super.initState();
+    loadAddress();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Direcciones de facturación",
+          title: Text("Datos de facturación",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold)),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.add),
-              onPressed: addAddress,
-            )
-          ],
         ),
-        body: _drawScreen());
+        body: _drawScreen(),
+        bottomNavigationBar: _drawBottom());
   }
 
   Widget _drawScreen() {
-    return FutureBuilder(
-      future: _apiBillingAddress.listBillingAddress(),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData) {
-          listAddress = snapshot.data;
-          if (listAddress.list.isEmpty) {
-            return emptyState();
-          } else {
-            return Padding(
-              padding: EdgeInsets.only(right: 24, left: 24, top: 24, bottom: 8),
-              child: Column(
-                children: <Widget>[
-                  _drawListAddress(),
-                  ButtonWidget(navToPage, Utils.primaryColor, "Siguiente"),
-                ],
+    return Padding(
+      padding: EdgeInsets.only(right: 24, left: 24, top: 24, bottom: 8),
+      child: ListView(
+        children: [
+          MilestoneWidget(actual: 2),
+          ContentBillingAddress(
+            street: street,
+            city: city,
+            colony: colony,
+            noInterior: noInterior,
+            noExterior: noExterior,
+            cdgPostal: cdgPostal,
+            state: state,
+            razon: razon,
+            rfc: rfc,
+            type: type,
+          ),
+          Container(height: 8),
+          Row(
+            children: [
+              Checkbox(
+                value: ticket,
+                onChanged: _changesValue
               ),
-            );
-          }
-        } else {
-          return Center(child: CircularProgressIndicator());
-        }
-      },
-    );
+              Text('Solicito factura electrónica')
+            ],
+          )
+        ],
+      ),
+    );    
   }
 
   void navToPage() {
+    saveAddress();
     Navigator.pushNamed(context, 'payment_method_page');
   }
 
-  Widget emptyState() {
-    return Center(
-        child: Padding(
-            padding: EdgeInsets.only(left: 32, right: 32),
-            child: Card(
-                child: ListTile(
-              onTap: addAddress,
-              leading: Icon(Icons.add_circle_outline, color: Utils.redColor),
-              title: Text("Agregar dirección",
-                  style: TextStyle(color: Colors.black87, fontSize: 18.0)),
-              subtitle: Text("Agregue la dirección de facturación",
-                  style: TextStyle(color: Colors.black54, fontSize: 16.0)),
-            ))));
-  }
-
-  Widget _drawListAddress() {
-    return Expanded(
-        child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: listAddress.list.length,
-            itemBuilder: (BuildContext context, int index) {
-              return _drawRowAddress(index);
-            }));
-  }
-
-  void addAddress() {
-    Navigator.pushNamed(context, 'add_billing_address_page');
-  }
-
-  Widget _drawRowAddress(int index) {
-    BillingAddress item = listAddress.list[index];
-    Icon icon;
-
-    if (item.isDefault != 0) {
-      icon = Icon(Icons.speaker_notes, color: Utils.redColor);
-      user.billingId = item.id;
-    } else {
-      icon = Icon(Icons.speaker_notes_off, color: Colors.grey);
-    }
-
-    return Card(
-      margin: EdgeInsets.symmetric(vertical: 12.0),
-      child: ListTile(
-        onTap: () {
-          _selectedAddress(index);
-        },
-        title: Text(item.businessName, style: TextStyle(fontSize: 18.0)),
-        subtitle: Row(
-          children: <Widget>[
-            Text(
-              item.address + ' ',
-              style: TextStyle(fontSize: 16.0),
-              maxLines: 2,
-            ),
-            Text(
-              item.postalCode + ', ' + item.city,
-              style: TextStyle(fontSize: 16.0),
-              maxLines: 2,
-            )
-          ],
-        ),
-        leading: icon,
-      ),
+  Widget _drawBottom() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Card(
+          child: Container(
+              padding: EdgeInsets.only(left: 20, right: 20, top: 24, bottom: 24),
+              color: Colors.white,
+              child: ButtonWidget(navToPage, Utils.primaryColor, "Continuar"))),
     );
   }
 
-  void _selectedAddress(int index) async {
-    final id = listAddress.list[index].id;
-    ResponseDto responseDto =
-        await _apiBillingAddress.defaultBillingAddress(id);
-
-    if (NetworkUtils.isReqSuccess(responseDto.code)) {
-      setState(() {
-        _drawRowAddress(index);
-      });
-    }
+  saveAddress() {
+    address.street = street.text;
+    address.city = city.text;
+    address.colony = colony.text;
+    address.country = "Mexico";
+    address.inside = noInterior.text;
+    address.outside = noExterior.text;
+    address.postal = cdgPostal.text;
+    address.razon = razon.text;
+    address.rfc = rfc.text;
+    address.state = state.text;
+    address.type = type.text;
+    address.ticket = ticket;
   }
+
+  loadAddress() {
+    street.text = address.street;
+    city.text = address.city;
+    colony.text = address.colony;
+    noInterior.text = address.inside;
+    noExterior.text = address.outside;
+    cdgPostal.text = address.postal;
+    razon.text = address.razon;
+    rfc.text = address.rfc;
+    state.text = address.state;
+    type.text = address.type;
+  }
+
+  void _changesValue(bool newValue) => setState(() {
+    ticket = newValue;
+  });
 }

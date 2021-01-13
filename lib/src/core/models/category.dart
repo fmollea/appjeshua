@@ -8,10 +8,9 @@ class Category {
     id = snapshot['id'];
     name = snapshot['name'];
     slug = snapshot['slug'];
-    image = snapshot['image'];
+    image = snapshot['image'] == null ? '' : snapshot['image'];
   }
-
-
+ 
   Category(this.id, this.name, this.slug, this.image);
 }
 

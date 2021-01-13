@@ -8,7 +8,6 @@ import '../core/services/apiProduct.dart';
 import 'Utils.dart';
 
 class DataSearch extends SearchDelegate {
-  ScrollController _scrollController = ScrollController();
   Utils utils = Utils();
   List<Product> _list = List();
   ApiProduct api = ApiProduct();
@@ -43,7 +42,7 @@ class DataSearch extends SearchDelegate {
     return ContentListProduct(params: params);
   }
 
-  @override
+    @override
   Widget buildSuggestions(BuildContext context) {
     if (query.isEmpty) {
       return Container();
@@ -60,24 +59,32 @@ class DataSearch extends SearchDelegate {
                 ? []
                 : _list
                     .where((p) =>
-                        p.name.toLowerCase().contains(query.toLowerCase()))
+                        p.name.toLowerCase().contains(query.toLowerCase()) || 
+                        p.sku.toLowerCase().contains(query.toLowerCase()))
                     .toList();
 
-            return ListView(children: listSuggestions.map((product) {
-              return ListTile(
-                leading: FadeInImage(
-                  image: NetworkImage(product.path),
-                  placeholder: AssetImage('assets/not_found.png'),
-                  width: 50.0,
-                  fit: BoxFit.contain,
-                ),
-                title: Text(product.name),
-                onTap: () {
-                  Navigator.pushNamed(context, 'products_detail_page',
-                      arguments: product.id);
-                },
-              );
-            }).toList());
+            return Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: ListView(children: listSuggestions.map((product) {
+                return ListTile(
+                  leading: FadeInImage(
+                    image: NetworkImage(Utils.getProductImage(product.path, product.id)),
+                    placeholder: AssetImage('assets/not_found.png'),
+                    width: 50,
+                    height: 50,
+                    fit: BoxFit.contain,
+                  ),
+                  title: Padding(
+                    padding: const EdgeInsets.only(left: 4.0),
+                    child: Text(product.name),
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, 'products_detail_page',
+                        arguments: product.slug);
+                  },
+                );
+              }).toList()),
+            );
           } else {
             return Center(child: CircularProgressIndicator());
           }

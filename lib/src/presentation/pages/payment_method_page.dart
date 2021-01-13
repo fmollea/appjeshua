@@ -3,6 +3,8 @@ import 'package:appjeshua/src/core/models/paymentMethod.dart';
 import 'package:appjeshua/src/core/models/user.dart';
 import 'package:appjeshua/src/core/services/apiPayments.dart';
 import 'package:appjeshua/src/presentation/widget/button_widget.dart';
+import 'package:appjeshua/src/presentation/widget/content_dialog.dart';
+import 'package:appjeshua/src/presentation/widget/milestone_widget.dart';
 import 'package:flutter/material.dart';
 
 class PaymentMethodPage extends StatefulWidget {
@@ -14,6 +16,8 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
   final _apiPayment = ApiPayments();
   PaymentMethods _listPaymentMethods = PaymentMethods();
   User user = User();
+  var response;
+  int isSelected = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +49,9 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
               padding: EdgeInsets.only(right: 24, left: 24, top: 24, bottom: 8),
               child: Column(
                 children: <Widget>[
-                  _drawListAddress(),
-                  ButtonWidget(navToPage, Utils.primaryColor, "Siguiente"),
+                  MilestoneWidget(actual: 3),
+                  _drawListPaymentMethods(),
+                  _drawBottom()
                 ],
               ),
             );
@@ -59,11 +64,59 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
   }
 
   void navToPage() {
-    if (checkSelected())
-      Navigator.pushNamed(context, 'purchase_confirmation_page');
-    else
-      Utils.showToast("Seleccione el método de pago que desea usar.",
-          Colors.white, Colors.red);
+    Navigator.pushNamed(context, 'purchase_made_page');
+  }
+
+  void navToInit() {
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil('main_page', ModalRoute.withName('login'));
+  }
+
+  processPayment() async {
+    ApiPayments api = ApiPayments();
+    if (response == null) {
+      Utils.showLoading(context);
+      response = await api.processPayment();
+      setState(() {
+        processPaymentAux();
+      });
+    } else {
+      Utils.hideLoading(context);
+      showDialogConfirm();
+    }
+  } 
+
+  // ver como dejar todo en un solo método. El problema es que se llama dos veces la llamada a la API.
+  processPaymentAux() {
+    if (response == null) {
+      Utils.showLoading(context);
+      setState(() {
+        processPaymentAux();
+      });
+    } else {
+      Utils.hideLoading(context);
+      showDialogConfirm();
+    }
+  }
+
+  void showDialogConfirm() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return WillPopScope(
+              onWillPop: () async => false,
+              child: ContentDialog(
+              pathImg: 'assets/icon_gracias.png',
+              title: '¡Gracias!',
+              subtitle: 'Su pedido está en proceso',
+              textPrimaryAction: 'Seguir Comprando',
+              primaryAction: navToInit,
+              textSecondaryAction: 'VER RESUMEN DE COMPRA',
+              secondaryAction: navToPage,
+            ),
+          );
+        });
   }
 
   bool checkSelected() {
@@ -81,7 +134,7 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
             padding: EdgeInsets.only(left: 32, right: 32),
             child: Card(
                 child: ListTile(
-              leading: Icon(Icons.add_circle_outline, color: Utils.redColor),
+              leading: Icon(Icons.add_circle_outline, color: Utils.secondaryColor),
               title: Text("Método de pago no disponible",
                   style: TextStyle(color: Colors.black87, fontSize: 18.0)),
               subtitle: Text(
@@ -91,50 +144,61 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
             ))));
   }
 
-  Widget _drawListAddress() {
+  Widget _drawListPaymentMethods() {
+    if (isSelected == 0) {
+      user.paymentId = _listPaymentMethods.list[0].id;
+      user.payment = _listPaymentMethods.list[0].name;
+    }
     return Expanded(
         child: ListView.builder(
             shrinkWrap: true,
             itemCount: _listPaymentMethods.list.length,
             itemBuilder: (BuildContext context, int index) {
-              return _drawRowAddress(index);
+              return _drawRowPaymentMethod(index);
             }));
   }
 
-  Widget _drawRowAddress(int index) {
+  Widget _drawRowPaymentMethod(int index) {
+    User user = User();
     PaymentMethod item = _listPaymentMethods.list[index];
-    Icon icon;
-
-    if (item.isSelected) {
-      icon = Icon(Icons.check_circle_outline, color: Utils.redColor);
-      user.paymentId = item.id;
-    } else {
-      icon = Icon(Icons.radio_button_unchecked, color: Colors.grey);
-    }
 
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 12.0),
-      child: ListTile(
-        onTap: () {
-          _selectedAddress(index);
-        },
-        title: Text(item.name, style: TextStyle(fontSize: 18.0)),
-        subtitle: Text(item.description, style: TextStyle(fontSize: 16.0)),
-        leading: icon,
+      margin: EdgeInsets.symmetric(vertical: 8.0),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Radio(
+                groupValue: index,
+                value: isSelected,
+                onChanged: (value) {
+                  setState(() {
+                    final item = _listPaymentMethods.list[index];
+                    user.paymentId = item.id;
+                    user.payment = item.name;
+                    item.isSelected = !item.isSelected;
+                    isSelected = index;
+
+                    if (item.isSelected) {
+                      user.paymentId = item.id;
+                      user.payment = item.name;
+                    }
+                  });
+                }),
+            Expanded(child: Text(item.name, style: TextStyle(fontSize: 16.0))),
+          ],
+        ),
       ),
     );
   }
 
-  void _selectedAddress(int index) async {
-    PaymentMethod item = _listPaymentMethods.list[index];
-
-    _listPaymentMethods.list.forEach((element) {
-      if (element != item) element.isSelected = false;
-    });
-
-    item.isSelected = !item.isSelected;
-    setState(() {
-      _drawRowAddress(index);
-    });
+  Widget _drawBottom() {
+    return Card(
+      elevation: 4,
+        child: Container(
+            padding: EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 24),
+            color: Colors.white,
+            child: ButtonWidget(
+                processPayment, Utils.primaryColor, "Finalizar compra")));
   }
 }

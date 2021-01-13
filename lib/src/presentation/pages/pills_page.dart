@@ -1,10 +1,14 @@
+import 'package:appjeshua/src/commons/Utils.dart';
 import 'package:appjeshua/src/commons/search_delegate.dart';
+import 'package:appjeshua/src/core/models/category.dart';
 import 'package:appjeshua/src/core/models/product.dart';
+import 'package:appjeshua/src/core/models/user.dart';
+import 'package:appjeshua/src/core/services/apiCategory.dart';
 import 'package:appjeshua/src/core/services/apiProduct.dart';
 import 'package:appjeshua/src/presentation/widget/carousel_widget.dart';
 import 'package:appjeshua/src/presentation/widget/drawer_widget.dart';
 import 'package:appjeshua/src/presentation/widget/grid_product_widget.dart';
-import 'package:appjeshua/src/presentation/widget/search_widget.dart';
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -14,6 +18,9 @@ class PillsPage extends StatefulWidget {
 }
 
 class _PillsPageState extends State<PillsPage> {
+  User user = User();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,10 +39,18 @@ class _PillsPageState extends State<PillsPage> {
                 showSearch(context: context, delegate: DataSearch());
               },
             ),
-            IconButton(
-              icon: Icon(Icons.shopping_cart, color: Colors.white),
-              onPressed: navToCart,
-            )
+            GestureDetector(
+              child: Padding(
+                padding: const EdgeInsets.only(top:8.0, right: 16),
+                child: Badge(
+                  animationType: BadgeAnimationType.slide,
+                  badgeContent: Text(user.cantCarts.toString(), style: TextStyle(color: Colors.white)),
+                  child: Icon(Icons.shopping_cart, color: Colors.white)),
+              ),
+              onTap: () {
+                navToCart();
+              },
+            ),
           ],
         ),
         drawer: DrawerWidget(),
@@ -84,42 +99,53 @@ class _PillsPageState extends State<PillsPage> {
   }
 
   _drawCategories() {
-    return SliverFixedExtentList(
-      itemExtent: 100,
-      delegate: SliverChildListDelegate([
-        (ListView(
-          scrollDirection: Axis.horizontal,
-          children: <Widget>[
-            _drawRowCategories('cat_antibioticos', 'Antibioticos'),
-            _drawRowCategories('cat_babys', 'Bebe'),
-            _drawRowCategories('cat_ctlpeso', 'Peso'),
-            _drawRowCategories('cat_diabeticos', 'Diabéticos'),
-            _drawRowCategories('cat_dispmedic', 'Médicos'),
-            _drawRowCategories('cat_higuieneper', 'Higiene Per'),
-            _drawRowCategories('cat_mcosmeticos', 'Cosméticos'),
-            _drawRowCategories('cat_medicamentos', 'Medicamentos'),
-            _drawRowCategories('cat_nuevos', 'Nuevos'),
-            _drawRowCategories('cat_promociones', 'Promociones'),
-            _drawRowCategories('cat_rehidratantes', 'Rehidratantes'),
-            _drawRowCategories('cat_vidasexual', 'Salud Sexual'),
-          ],
-        ))
-      ]),
+    final apiCategory = ApiCategory();
+    return FutureBuilder(
+      future: apiCategory.getCategories(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        List<Category> list;
+        if (snapshot.hasData) {
+          list = (snapshot.data as Categories).list.reversed.toList();
+
+          return SliverFixedExtentList(
+            itemExtent: 100,
+            delegate: SliverChildListDelegate([(
+              ListView.builder(
+                itemCount: list.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (BuildContext context, int index) {
+                  final item = list[index];
+                  return _drawRowCategories(item.image, item.name, item.slug);
+                },
+              ))
+            ]),
+          );
+        } else {
+          return SliverGrid(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1),
+            delegate: SliverChildListDelegate([Center(child: CircularProgressIndicator())]));
+        }
+
+        
+      },
     );
   }
 
-  _drawRowCategories(String path, String name) {
+  _drawRowCategories(String path, String name, String slug) {
     return GestureDetector(
-      onTap: navToProductList,
+      onTap: () {
+        navToProductList(slug);
+      },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Column(
           children: [
-            Image(
-                image: AssetImage('assets/$path.png'),
-                fit: BoxFit.fill,
-                height: 70,
-                width: 70),
+             FadeInImage.assetNetwork(
+              placeholder: Utils.placeHolderPath,
+              image: Utils.getCategoryImage(path),
+              fit: BoxFit.fill,
+              height: 70,
+              width: 70),
             Container(height: 2),
             Text(name)
           ],
@@ -132,8 +158,8 @@ class _PillsPageState extends State<PillsPage> {
     Navigator.pushNamed(context, 'purchase_summary_page');
   }
 
-  void navToProductList() {
-    Map<String, String> mapOfArgs = {"queryparam": ''};
+  void navToProductList(String slug) {
+    Map<String, String> mapOfArgs = {"category": slug};
     Navigator.pushNamed(context, 'products_page', arguments: mapOfArgs);
   }
 }

@@ -32,7 +32,7 @@ class _CardProductWidgetState extends State<CardProductWidget> {
   }
 
   _navToProduct() {
-    Navigator.pushNamed(context, 'products_detail_page', arguments: item.id);
+    Navigator.pushNamed(context, 'products_detail_page', arguments: item.slug);
   }
 
   Widget _drawChild() {
@@ -43,13 +43,13 @@ class _CardProductWidgetState extends State<CardProductWidget> {
   }
 
   Widget _drawHeader() {
-    final path = item.path == 'no-photo.png' ? 'assets/not_found.png' : item.path; 
-    return FadeInImage.assetNetwork(
-        placeholder: 'assets/not_found.png',
-        image: path,
-        width: 100,
-        height: 100,
-        fit: BoxFit.fill);
+    return FadeInImage(
+          image: NetworkImage(Utils.getProductImage(item.path, item.id)),
+          placeholder: AssetImage('assets/not_found.png'),
+          width: 100,
+          height: 100,
+          fit: BoxFit.contain,
+        );
   }
 
   Widget _drawContent() {
@@ -64,6 +64,7 @@ class _CardProductWidgetState extends State<CardProductWidget> {
                 color: Colors.black54,
                 fontSize: 16,
                 fontWeight: FontWeight.bold),
+            maxLines: 2,
           ),
           Container(
             height: 8.0,

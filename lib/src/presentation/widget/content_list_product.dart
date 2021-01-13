@@ -55,8 +55,8 @@ class _ContentListProductState extends State<ContentListProduct> {
         response = await api.searchProductsByQueryParam(query, _perpage);
       }
 
-      if (widget.params.containsKey('categoria_id')) {
-        final category = widget.params['categoria_id'];
+      if (widget.params.containsKey('category')) {
+        final category = widget.params['category'];
         response =
             await api.searchProductsByCategory(category, _page);
       }

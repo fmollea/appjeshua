@@ -26,17 +26,17 @@ class _RowProductWidgetState extends State<RowProductWidget> {
   }
 
   Widget _drawCard(BuildContext context) {
-    final path = item.path == 'no-photo.png' ? 'assets/not_found.png' : item.path;  
 
     return InkResponse(
       child: Card(
           child: Row(children: <Widget>[
-        FadeInImage.assetNetwork(
-            placeholder: 'assets/not_found.png',
-            image: path,
-            width: 100,
-            height: 100,
-            fit: BoxFit.fill),
+        FadeInImage(
+          image: NetworkImage(Utils.getProductImage(item.path, item.id)),
+          placeholder: AssetImage('assets/not_found.png'),
+          width: 100,
+          height: 100,
+          fit: BoxFit.contain,
+        ),
         Expanded(
             child: SizedBox(
                 height: 120,
@@ -46,12 +46,12 @@ class _RowProductWidgetState extends State<RowProductWidget> {
                         subtitle: Text("Código " + item.sku),
                         trailing: _favourite()))))
       ])),
-      onTap: () => _onTileClicked(item.id),
+      onTap: () => _onTileClicked(item.slug),
     );
   }
 
-  _onTileClicked(int id) {
-    Navigator.pushNamed(context, 'products_detail_page', arguments: id);
+  _onTileClicked(String slug) {
+    Navigator.pushNamed(context, 'products_detail_page', arguments: slug);
   }
 
   // TODO recordar quitar esta parte y usar el widget favourite. El problema es que no hace update de la lista.

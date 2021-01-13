@@ -24,6 +24,7 @@ class _LoginPageState extends State<LoginPage> implements LoginPageView {
     super.initState();
     _presenter = LoginPresenter();
     _presenter.attachView(this);
+    _presenter.obtainSharedPreferences();
   }
 
   @override
@@ -70,7 +71,7 @@ class _LoginPageState extends State<LoginPage> implements LoginPageView {
           prefixIcon: utils.getIcon('person', Utils.redColor)),
       onChanged: (value) {
         setState(() {
-          _presenter.name = value;
+          _presenter.name.text = value;
         });
       },
     );
@@ -87,16 +88,10 @@ class _LoginPageState extends State<LoginPage> implements LoginPageView {
           prefixIcon: utils.getIcon('password', Utils.redColor)),
       onChanged: (value) {
         setState(() {
-          _presenter.password = value;
+          _presenter.password.text= value;
         });
       },
     );
-  }
-
-  Widget _buttonRegister() {
-    return ButtonWidget(() {
-      _presenter.navToPage('register_page');
-    }, Utils.redColor, 'Regístrate');
   }
 
   Widget _buttonLogin() {
