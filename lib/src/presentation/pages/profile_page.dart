@@ -6,6 +6,11 @@ import 'package:appjeshua/src/presentation/widget/circle_image_widget.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
+
+  final bool isBottomOptionPage;
+
+  const ProfilePage({Key key, this.isBottomOptionPage = false}) : super(key: key);
+
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
@@ -27,16 +32,14 @@ class _ProfilePageState extends State<ProfilePage> implements ProfilePageView {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(Utils.titleProfile,
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold)),
-      ),
+      appBar: _drawAppBar(),
       body: drawScreen(),
     );
+  }
+
+  _drawAppBar() {
+    return widget.isBottomOptionPage ? AppBar(title: Text(Utils.titleProfile), leading: Container(), centerTitle: true,) :
+      AppBar(title: Text(Utils.titleProfile), centerTitle: true,); 
   }
 
   drawScreen() {

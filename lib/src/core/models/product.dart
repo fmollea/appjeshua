@@ -23,7 +23,7 @@ class Product {
     department = snapshot['department'];
     slug = snapshot['slug'];
     stock = snapshot['stock'] == null ? '0' : snapshot['stock'].toString();
-    isFav = snapshot['isfav'] == null ? false : snapshot['isfav'];
+    isFav = snapshot['isFav'] == null ? false : snapshot['isFav'];
     isAvaiable = int.parse(stock) > 0;
   }
 

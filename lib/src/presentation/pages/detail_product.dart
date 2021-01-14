@@ -41,7 +41,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
         actions: <Widget>[
           GestureDetector(
               child: Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: const EdgeInsets.only(top:12.0, right: 12, bottom: 12),
                 child: Badge(
                   animationType: BadgeAnimationType.slide,
                   badgeContent: Text(user.cantCarts.toString(), style: TextStyle(color: Colors.white)),
@@ -55,6 +55,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
         ],
       ),
       body: drawScreen(),
+      bottomNavigationBar: _drawButtonAdd(),
     );
   }
 
@@ -89,7 +90,6 @@ class _DetailProductPageState extends State<DetailProductPage> {
           Container(height: 8),
           _drawRowPrices(),
           _drawAmount(),
-          _drawButtonAdd(),
         ],
       ),
     );
@@ -128,6 +128,9 @@ class _DetailProductPageState extends State<DetailProductPage> {
         }
       }
     }
+    setState(() {
+      
+    });
   }
 
   showLoading() {
@@ -181,10 +184,16 @@ class _DetailProductPageState extends State<DetailProductPage> {
 
   Widget _drawImage() {
     try {
-      return FadeInImage.assetNetwork(
-        placeholder: Utils.placeHolderPath,
-        image: Utils.getProductImage(_product.path, _product.id),
-        fit: BoxFit.fill);
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: FadeInImage.assetNetwork(
+            height: 175,
+            placeholder: Utils.placeHolderPath,
+            image: Utils.getProductImage(_product.path, _product.id),
+            fit: BoxFit.fill),
+        ),
+      );
     } catch(e) {
       return Image.asset(Utils.placeHolderPath);
     }
@@ -245,23 +254,24 @@ class _DetailProductPageState extends State<DetailProductPage> {
 
   Widget _drawRowPrices() {
     return Row(
-      children: [_labelPrecio('Precio Neto', _product.price), 
-      VerticalDivider(width: 2),
-      _labelPrecio('Precio P{ublico', _product.priceWithOutIva)],
+      children: [_labelPrecio('Precio', _product.price), 
+      //VerticalDivider(width: 2),
+      //_labelPrecio('Precio P{ublico', _product.priceWithOutIva)
+      ],
     );
   }
 
   Widget _labelPrecio(String label, String price) {
     return Row(
       children: [
-        _precio(price),
         Text(
-        '  $label',
+        '$label ',
         style: TextStyle(
             color: Utils.secondaryColor,
             fontWeight: FontWeight.bold,
-            fontSize: 14),
-      )
+            fontSize: 16),
+      ),
+      _precio(price),
       ],
     );
   }
@@ -349,16 +359,19 @@ class _DetailProductPageState extends State<DetailProductPage> {
   }
 
   Widget _drawButtonAdd() => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: const EdgeInsets.all(16.0),
         child: ButtonWidget(() {
           addProductCart();
         }, Utils.redColor, 'Agregar al carrito'),
       );
 
   _drawCode() {
-    return Text('Código ${_product.sku}',
-        style: TextStyle(
-            color: Colors.black87,
-            fontSize: 20.0));
+    return Padding(
+      padding: const EdgeInsets.only(top:8.0),
+      child: Text('Código ${_product.sku}',
+          style: TextStyle(
+              color: Colors.black87,
+              fontSize: 16.0)),
+    );
   }
 }

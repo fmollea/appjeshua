@@ -40,6 +40,7 @@ class ApiPayments {
 
     user.lastOrder = responseDto.id;
     user.cantCarts = 0;
+    
     return responseDto; 
   }
 

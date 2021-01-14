@@ -29,24 +29,54 @@ class _RowProductWidgetState extends State<RowProductWidget> {
 
     return InkResponse(
       child: Card(
-          child: Row(children: <Widget>[
-        FadeInImage(
-          image: NetworkImage(Utils.getProductImage(item.path, item.id)),
-          placeholder: AssetImage('assets/not_found.png'),
-          width: 100,
-          height: 100,
-          fit: BoxFit.contain,
-        ),
-        Expanded(
-            child: SizedBox(
-                height: 120,
-                child: Center(
-                    child: ListTile(
-                        title: Text(item.name),
-                        subtitle: Text("Código " + item.sku),
-                        trailing: _favourite()))))
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+          FadeInImage(
+            image: NetworkImage(Utils.getProductImage(item.path, item.id)),
+            placeholder: AssetImage('assets/not_found.png'),
+            width: 100,
+            height: 100,
+            fit: BoxFit.contain,
+          ),
+          _drawInfo(),
+          _favourite()
       ])),
       onTap: () => _onTileClicked(item.slug),
+    );
+  }
+
+  _drawInfo() {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Text(item.name,
+              style: TextStyle(
+                color: Colors.black87,
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold)
+            ),
+            Container(height: 4),
+            Text(item.description,
+              style: TextStyle(color: Colors.black54, fontSize: 14.0), maxLines: 2),
+            Container(height: 8),
+            _drawPrice()
+          ],
+          crossAxisAlignment: CrossAxisAlignment.start,
+          ),
+      ),
+    );
+  }
+
+  _drawPrice() {
+    return Text(
+      '\$ ${item.price} MXN',
+      style: TextStyle(
+          color: Colors.redAccent,
+          fontSize: 18.0,
+          fontWeight: FontWeight.bold),
     );
   }
 
@@ -56,9 +86,12 @@ class _RowProductWidgetState extends State<RowProductWidget> {
 
   // TODO recordar quitar esta parte y usar el widget favourite. El problema es que no hace update de la lista.
   _favourite() {
-    return InkResponse(
-      child: _drawIconFav(),
-      onTap: _addFavouriteProduct,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: InkResponse(
+        child: _drawIconFav(),
+        onTap: _addFavouriteProduct,
+      ),
     );
   }
 

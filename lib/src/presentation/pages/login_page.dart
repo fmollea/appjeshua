@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> implements LoginPageView {
 
   @override
   navToPage(String path) {
-    Navigator.pushNamed(context, path);
+    Navigator.pushNamedAndRemoveUntil(context, path, ModalRoute.withName(path));
   }
 
   @override

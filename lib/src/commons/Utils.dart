@@ -23,7 +23,7 @@ class Utils {
   static final String path1 = "https://www.google.com/imgres?imgurl=https%3A%2F%2Fassets.pokemon.com%2Fassets%2Fcms2%2Fimg%2Fpokedex%2Ffull%2F006.png&imgrefurl=https%3A%2F%2Fwww.pokemon.com%2Fes%2Fpokedex%2Fcharizard&tbnid=xl2wn-641bZMzM&vet=10CBQQxiAoAmoXChMIwLn68fnu7QIVAAAAAB0AAAAAEAo..i&docid=J82tE9FLOV9jyM&w=475&h=475&itg=1&q=charmander&ved=0CBQQxiAoAmoXChMIwLn68fnu7QIVAAAAAB0AAAAAEAo";
   static final String placeHolderPath = "assets/not_found.png";
   static String getPerfilImage(String path, int id) => "https://jeshuamedic.com/4dministraci0n/public/img/user/$id/$path";
-  static String getCategoryImage(String path) => "hhttps://app.jeshuamedic.com/assets/images/icons/$path";
+  static String getCategoryImage(String path) => "https://app.jeshuamedic.com/assets/images/icons/$path";
   static String getProductImage(String path, int id) => "https://jeshuamedic.com/4dministraci0n/public/img/products/$id/$path";
 
   //maps of icons

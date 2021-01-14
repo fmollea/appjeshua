@@ -25,6 +25,7 @@ class LoginDto {
     user.email = snapshot['email'];
     user.idSucursal = snapshot['sucursal'];
     user.userId = snapshot['id'];
+    user.image = snapshot['image'];
 
     var shipping = DeliveryAddress();
     var billing = BillingAddress(); 

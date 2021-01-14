@@ -125,8 +125,6 @@ class _CardProductWidgetState extends State<CardProductWidget> {
         item.isFav = true;
       }
     }
-
-    _drawIconFav();
     setState(() {});
   }
 

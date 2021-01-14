@@ -18,6 +18,7 @@ class ApiCart {
     var decodedData = {'status': 'ok', 'code': 200, 'message': 'ok'};
     final responseDto = ResponseDto.fromJson(decodedData);
     user.cantCarts++;
+
     return responseDto;
   }
 
@@ -30,6 +31,8 @@ class ApiCart {
 
     final responseDto = Carts.fromJsonList(decodedData);
     user.cantCarts = responseDto.list.length;
+    
+    
     return responseDto;
   }
 
@@ -41,6 +44,7 @@ class ApiCart {
     var decodedData = {'status': 'ok', 'code': 200, 'message': 'ok'};
     final responseDto = ResponseDto.fromJson(decodedData);
     user.cantCarts--;
+    
 
     return responseDto;
   }
@@ -53,6 +57,7 @@ class ApiCart {
     var decodedData = {'status': 'ok', 'code': 200, 'message': 'ok'};
     final responseDto = ResponseDto.fromJson(decodedData);
     user.cantCarts = 0;
+    
 
     return responseDto;
   }

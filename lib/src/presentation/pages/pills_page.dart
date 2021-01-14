@@ -39,9 +39,9 @@ class _PillsPageState extends State<PillsPage> {
                 showSearch(context: context, delegate: DataSearch());
               },
             ),
-            GestureDetector(
+          GestureDetector(
               child: Padding(
-                padding: const EdgeInsets.only(top:8.0, right: 16),
+                padding: const EdgeInsets.only(top:12.0, right: 12, bottom: 12),
                 child: Badge(
                   animationType: BadgeAnimationType.slide,
                   badgeContent: Text(user.cantCarts.toString(), style: TextStyle(color: Colors.white)),
@@ -51,6 +51,7 @@ class _PillsPageState extends State<PillsPage> {
                 navToCart();
               },
             ),
+          Container(width: 8),  
           ],
         ),
         drawer: DrawerWidget(),

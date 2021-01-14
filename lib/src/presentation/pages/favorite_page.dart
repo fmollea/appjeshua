@@ -7,6 +7,10 @@ import 'package:flutter/material.dart';
 
 class FavoritePage extends StatefulWidget {
 
+  final bool isBottomOptionPage;
+
+  const FavoritePage({Key key, this.isBottomOptionPage = false}) : super(key: key);
+
   @override
   _FavoritePageState createState() => _FavoritePageState();
 }
@@ -29,13 +33,18 @@ class _FavoritePageState extends State<FavoritePage> {
     @override 
     Widget build(BuildContext context) {
       return Scaffold(
-        appBar: AppBar(title: Text('Listado de favoritos')),
+        appBar: _drawAppBar(),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: _drawPage(),
         ),
       );
     }
+
+  _drawAppBar() {
+    return widget.isBottomOptionPage ? AppBar(title: Text('Listado de favoritos'), leading: Container(), centerTitle: true,) :
+      AppBar(title: Text('Listado de favoritos'), centerTitle: true,); 
+  }
 
   _drawPage() {
     _page++;
