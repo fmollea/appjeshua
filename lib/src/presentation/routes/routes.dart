@@ -54,4 +54,5 @@ Map<String, WidgetBuilder> getApplicationRoutes() => <String, WidgetBuilder>{
       'detail_order': (BuildContext context) => DetailOrder(),
       'details_profile': (BuildContext context) => DetailsProfilePage(),
       'edit_profile': (BuildContext context) => EditProfilePage(),
+      'list_billing_address_page': (BuildContext context) => ListBillingAd
     };

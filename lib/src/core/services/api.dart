@@ -2,9 +2,9 @@ class Api {
 
   final String urlBase = 'jeshuamedic.com';
 
-  final String urlRegister = 'partsmontapi/api/register';
+  final String urlRegister = '4dministraci0n/api/register';
   final String urlLogin = '4dministraci0n/api/ingresar';
-  final String urlForgetPass = 'partsmontapi/api/reset/password';
+  final String urlForgetPass = '4dministraci0n/api/reset/password';
 
   final String urlProduct = '4dministraci0n/api/get-products-sucursal';
   final String urlProductSearch = '4dministraci0n/api/get-products-search';
@@ -30,6 +30,14 @@ class Api {
   final String urlPaymentProcess = "4dministraci0n/api/orders-api";
 
   final String urlNotifications = "4dministraci0n/api/data-notifications";
+
+  final String urlDeliveryAddress = "4dministraci0n/api/deliveryAddress";
+  final String urlAddDeliveryAddress = "4dministraci0n/api/deliveryAddress/add";
+  final String urlUpdateDeliveryAddress = "4dministraci0n/api/deliveryAddress/update";
+
+  final String urlBillingAddress = "4dministraci0n/api/billingAddress";
+  final String urlAddBillingAddress = "4dministraci0n/api/billingAddress/add";
+  final String urlUpdateBillingAddress = "4dministraci0n/api/billingAddress/update";
 
 
 }
