@@ -13,13 +13,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class PillsPage extends StatefulWidget {
+
+  _PillsPageState child;
+
   @override
-  _PillsPageState createState() => _PillsPageState();
+  _PillsPageState createState() {
+     child = _PillsPageState();
+     return child;
+  }
+
+  update() => child.update();
 }
 
 class _PillsPageState extends State<PillsPage> {
   User user = User();
+  ScrollController _scrollController = ScrollController();
+  List<Product> list = List();
+  int _page = 0;
 
+
+  @override
+  void initState() {
+    super.initState();
+    _initScrollController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +53,7 @@ class _PillsPageState extends State<PillsPage> {
             IconButton(
               icon: Icon(Icons.search, color: Colors.white),
               onPressed: () {
-                showSearch(context: context, delegate: DataSearch());
+                showSearch(context: context, delegate: DataSearch("none"));
               },
             ),
           GestureDetector(
@@ -60,6 +77,7 @@ class _PillsPageState extends State<PillsPage> {
 
   drawView() {
     return CustomScrollView(
+      controller: _scrollController,
       slivers: <Widget>[
         _imageBanner(),
         SliverPadding(padding: EdgeInsets.all(8.0)),
@@ -73,15 +91,15 @@ class _PillsPageState extends State<PillsPage> {
   }
 
   _drawGrid() {
+    _page = _page + 1;
     final apiProduct = ApiProduct();
     return FutureBuilder(
-      future: apiProduct.getProducts(1),
+      future: apiProduct.getProducts(_page),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        List<Product> list;
         if (snapshot.data != null) {
-          list = (snapshot.data as Products).list.reversed.toList();
+          list = list + (snapshot.data as Products).list;
         }
-        return GridProductWidget(categories: list);
+        return GridProductWidget(categories: list, pillsPage: widget);
       },
     );
   }
@@ -135,7 +153,7 @@ class _PillsPageState extends State<PillsPage> {
   _drawRowCategories(String path, String name, String slug) {
     return GestureDetector(
       onTap: () {
-        navToProductList(slug);
+        navToProductList(slug, name);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -159,8 +177,24 @@ class _PillsPageState extends State<PillsPage> {
     Navigator.pushNamed(context, 'purchase_summary_page');
   }
 
-  void navToProductList(String slug) {
-    Map<String, String> mapOfArgs = {"category": slug};
+  void navToProductList(String slug, String name) {
+    Map<String, String> mapOfArgs = {"category": slug, "title": name};
     Navigator.pushNamed(context, 'products_page', arguments: mapOfArgs);
+  }
+
+  void _initScrollController() {
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        setState(() {});
+        _drawGrid();
+      }
+    });
+  }
+
+   void update() {
+    setState(() {
+      
+    });
   }
 }

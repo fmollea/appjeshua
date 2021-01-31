@@ -2,14 +2,17 @@ import 'package:appjeshua/src/commons/NetworkUtils.dart';
 import 'package:appjeshua/src/commons/Utils.dart';
 import 'package:appjeshua/src/core/models/product.dart';
 import 'package:appjeshua/src/core/models/responseDto.dart';
+import 'package:appjeshua/src/core/services/apiCart.dart';
 import 'package:appjeshua/src/core/services/apiFavourite.dart';
+import 'package:appjeshua/src/presentation/pages/pills_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 class CardProductWidget extends StatefulWidget {
   Product item;
+  PillsPage pillsPage;
 
-  CardProductWidget({@required this.item});
+  CardProductWidget({@required this.item, this.pillsPage});
 
   @override
   _CardProductWidgetState createState() => _CardProductWidgetState(item: item);
@@ -65,6 +68,7 @@ class _CardProductWidgetState extends State<CardProductWidget> {
                 fontSize: 16,
                 fontWeight: FontWeight.bold),
             maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
           Container(
             height: 8.0,
@@ -77,11 +81,29 @@ class _CardProductWidgetState extends State<CardProductWidget> {
                 fontSize: 18,
                 fontFamily: 'Roboto'),
           ),
+          Container(height: 8),
+          _drawButtonAddtoCart(),
         ],
       ),
     );
   }
 
+  _drawButtonAddtoCart() {
+    return InkResponse(
+      child: Container(
+        padding: EdgeInsets.all(4),
+        color: Colors.lightBlue[800],
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.shopping_cart, color: Colors.white),
+            Text('  Agregar', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))
+          ]
+        ),
+      ),
+      onTap: addCart,
+    );
+  }
 
   _drawFooter() {
     return Row(
@@ -134,6 +156,27 @@ class _CardProductWidgetState extends State<CardProductWidget> {
       return utils.getIcon("is_fav", Utils.redColor);
     } else {
       return utils.getIcon("not_fav", Utils.redColor);
+    }
+  }
+
+  void addCart() async {
+    if (item.isAvaiable) {
+      Utils.showLoading(context);
+      final apiCart = ApiCart();
+      final response =
+          await apiCart.addProductCart(1, item.id);
+      if (NetworkUtils.isReqSuccess(response.code)) {
+        Utils.showToast("¡Se agregó al carrito!",
+            Colors.white, Colors.green);
+        if (widget.pillsPage != null) widget.pillsPage.update();  
+        Utils.hideLoading(context);   
+      } else {
+        Utils.showToast(item.name + " no se pudo agregar al carrito.",
+            Colors.white, Colors.red);
+        Utils.hideLoading(context);
+      } 
+    } else {
+      Utils.showToast("Producto no disponible.", Colors.white, Colors.red);
     }
   }
 }

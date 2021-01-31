@@ -100,7 +100,8 @@ class _DetailProductPageState extends State<DetailProductPage> {
   }
 
   addProductCart() async {
-    if (_quantitySelected == 0) {
+    if (_product.isAvaiable) {
+      if (_quantitySelected == 0) {
       Utils.showToast(
           "Seleccione la cantidad de " +
               _product.name +
@@ -108,25 +109,32 @@ class _DetailProductPageState extends State<DetailProductPage> {
           Colors.white,
           Colors.red);
     } else {
-      final apiCart = ApiCart();
-      if (response == null) {
-        showLoading();
-        response =
-          await apiCart.addProductCart(_quantitySelected, _product.id);
-        setState(() {
-          addProductCart();
-        });  
+      if (_quantitySelected > int.parse(_product.stock)) {
+        Utils.showToast("La cantidad seleccionada tiene que ser menor o igual a ${_product.stock}.", Colors.white, Colors.red);
       } else {
-        Navigator.pop(context);
-      
-        if (NetworkUtils.isReqSuccess(response.code)) {
-          Utils.showToast(_product.name + " agregado al carrito.",
-              Colors.white, Colors.green);  
+        final apiCart = ApiCart();
+        if (response == null) {
+          showLoading();
+          response =
+            await apiCart.addProductCart(_quantitySelected, _product.id);
+          setState(() {
+            addProductCart();
+          });  
         } else {
-          Utils.showToast(_product.name + " no se pudo agregar al carrito.",
-              Colors.white, Colors.red);
+          Navigator.pop(context);
+        
+          if (NetworkUtils.isReqSuccess(response.code)) {
+            Utils.showToast(_product.name + " agregado al carrito.",
+                Colors.white, Colors.green);  
+          } else {
+            Utils.showToast(_product.name + " no se pudo agregar al carrito.",
+                Colors.white, Colors.red);
+          }
         }
       }
+    }
+    } else {
+      Utils.showToast("Producto no disponible.", Colors.white, Colors.red);
     }
     setState(() {
       
@@ -362,7 +370,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
         padding: const EdgeInsets.all(16.0),
         child: ButtonWidget(() {
           addProductCart();
-        }, Utils.redColor, 'Agregar al carrito'),
+        }, Utils.primaryColor, 'Agregar al carrito'),
       );
 
   _drawCode() {

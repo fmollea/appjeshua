@@ -31,11 +31,11 @@ class Api {
 
   final String urlNotifications = "4dministraci0n/api/data-notifications";
 
-  final String urlDeliveryAddress = "4dministraci0n/api/deliveryAddress";
+  final String urlDeliveryAddress = "4dministraci0n/api/direccion-envio";
   final String urlAddDeliveryAddress = "4dministraci0n/api/deliveryAddress/add";
   final String urlUpdateDeliveryAddress = "4dministraci0n/api/deliveryAddress/update";
 
-  final String urlBillingAddress = "4dministraci0n/api/billingAddress";
+  final String urlBillingAddress = "4dministraci0n/api/direccion-facturacion";
   final String urlAddBillingAddress = "4dministraci0n/api/billingAddress/add";
   final String urlUpdateBillingAddress = "4dministraci0n/api/billingAddress/update";
 

@@ -62,6 +62,7 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
         if (snapshot.hasData) {
           if (listCarts.list.isEmpty) {
             listCarts = snapshot.data;
+            initArrayListOfUpdates();
           }
           _obtainTotal();
           return Column(
@@ -93,6 +94,7 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
   }
 
   Widget _drawCartResume() {
+    var total = _totalAmount.toStringAsFixed(2);
     return Container(
         height: 48,
         padding: EdgeInsets.only(left: 16, right: 16, top: 8),
@@ -107,7 +109,7 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold))),
             Text(
-              '\$ $_totalAmount MXN',
+              '\$ $total MXN',
               style: TextStyle(
                   color: Colors.redAccent,
                   fontSize: 20.0,
@@ -133,7 +135,7 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
       User user = User();
       await updatesCarts();
       user.carts = listCarts.list;
-      Navigator.pushNamed(context, 'delivery_point_page');
+      Navigator.pushNamed(context, 'list_delivery_address_page');
     }
   }
 
@@ -147,12 +149,13 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
           children: <Widget>[
               Padding(
                   padding: EdgeInsets.only(left: 8, right: 8),
-                  child: FadeInImage.assetNetwork(
-                      placeholder: 'assets/not_found.png',
-                      image: listCarts.list[index].product.path,
-                      width: 80,
-                      height: 80,
-                      fit: BoxFit.fill)),
+                  child: FadeInImage(
+                image: NetworkImage(Utils.getProductImage(listCarts.list[index].product.path, listCarts.list[index].product.id)),
+                placeholder: AssetImage('assets/not_found.png'),
+                width: 80,
+                height: 80,
+                fit: BoxFit.contain,
+              ),),
               Expanded(
                 child: SizedBox(
                   child: Column(
@@ -186,7 +189,7 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
             )));
   }
 
-  _drawCantAndDelete(int index) {
+ /* _drawCantAndDelete(int index) {
     TextEditingController controller = TextEditingController();
     controller.text = listCarts.list[index].quantity.toString();
     return Row(
@@ -256,11 +259,16 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
                 BoxDecoration(border: Border.all(color: Colors.black26)),
             child: Center(child: Text('+', style: TextStyle(fontSize: 16)))),
             onTap: () {
+              if (listCarts.list[index].quantity < int.parse(listCarts.list[index].product.stock)) {
                 listCarts.list[index].quantity++;
                 _totalAmount = _totalAmount +
                     double.parse(listCarts.list[index].product.price);
-            cartsUpdates[index] = 1;
+                cartsUpdates[index] = 1;
                 setState(() {}); 
+              } else {
+                Utils.showToast("La cantidad seleccionada tiene que ser menor a ${listCarts.list[index].product.stock}.", Colors.white, Colors.red);
+              }
+                
             }
         ),      
         Container(width: 8),          
@@ -349,5 +357,187 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
       Utils.hideLoading(context);
     }
     setState(() {});    
+  } */
+
+  _drawCantAndDelete(int index) {
+    TextEditingController controller = TextEditingController();
+    controller.text = listCarts.list[index].quantity.toString();
+    return Row(
+      key: UniqueKey(),
+      children: <Widget>[
+        GestureDetector(
+          child: Container(
+            width: 32,
+            height: 32,
+            decoration:
+              BoxDecoration(border: Border.all(color: Colors.black26)),
+            child: Center(child:Text('-', style: TextStyle(fontSize: 16)))),
+          onTap: () {
+                  if (listCarts.list[index].quantity > 0) {
+                    listCarts.list[index].quantity--;
+                    _totalAmount = _totalAmount -
+                        double.parse(listCarts.list[index].product.price);
+                    cartsUpdates[index] = 1;
+                    controller.text = listCarts.list[index].quantity.toString();
+                    setState(() {});
+                  }
+                },
+        ),
+        Expanded(child: Container(
+          height: 32,
+          child: Center(
+            child: Focus(
+              onFocusChange: (hasFocus) {
+                  if(hasFocus) {
+                    controller.text = "";
+                  } else {
+                    if (controller.text.isNotEmpty) 
+                      checkTextField(controller, index);
+                    else {
+                      controller.text = listCarts.list[index].quantity.toString();
+                    }
+                  }
+              },
+              child: TextField(
+              style: TextStyle(fontSize: 14),
+              textAlign: TextAlign.center,
+              controller: controller,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(0),
+              )),
+            ),
+          ),
+        ),
+    )),
+        GestureDetector(
+          child: Container(
+            height: 32,
+            width: 32,
+            decoration:
+                BoxDecoration(border: Border.all(color: Colors.black26)),
+            child: Center(child: Text('+', style: TextStyle(fontSize: 16)))),
+            onTap: () {
+                final stock = int.parse(listCarts.list[index].product.stock);
+                if (listCarts.list[index].quantity >= stock) {
+                    Utils.showToast("La cantidad seleccionada tiene que ser menor o igual a ${listCarts.list[index].product.stock}.", Colors.white, Colors.red);
+                } else {
+                  listCarts.list[index].quantity++;
+                  _totalAmount = _totalAmount +
+                    double.parse(listCarts.list[index].product.price);
+                  cartsUpdates[index] = 1;
+                  controller.text = listCarts.list[index].quantity.toString();
+                } 
+                setState(() {});
+            }
+        ),      
+        Container(width: 4),          
+        IconButton(
+          icon: Icon(Icons.delete, color: Colors.lightBlue[800]), 
+          onPressed: () {
+            final id = listCarts.list[index].product.id;
+            cartsUpdates[index] = 0;
+            _removeCart(id, index);
+          })
+      ],
+    );
+  }
+
+  checkTextField(TextEditingController controller, int index) {
+    final newValue = int.parse(controller.text);
+    final stock = int.parse(listCarts.list[index].product.stock);
+    final oldValue = listCarts.list[index].quantity;
+    final productName = listCarts.list[index].product.name;
+    
+    if (stock == 0) {
+      Utils.showToast("Producto no disponible.", Colors.white, Colors.red);
+      controller.text = listCarts.list[index].quantity.toString();  
+    } else if (newValue != null && newValue > stock) {
+      Utils.showToast("La cantidad seleccionada tiene que ser mayor a ${listCarts.list[index].product.stock}.", Colors.white, Colors.red);
+      controller.text = oldValue.toString();  
+    } else if (newValue != null && newValue > 0) {
+        listCarts.list[index].quantity = newValue;
+        _totalAmount = _totalAmount -
+            double.parse(listCarts.list[index].product.price);
+        cartsUpdates[index] = 1;
+      } else {
+        Utils.showToast(
+          "La cantidad seleccionada tiene que ser mayor a 0.", Colors.white, Colors.red);
+        controller.text = oldValue.toString();
+      }
+
+      setState(() {
+        
+      });
+  }
+
+  _removeCart(int id, int index) async {
+    ResponseDto response = await _apiCart.removeProducCart(id);
+    if (NetworkUtils.isReqSuccess(response.code)) {
+      
+        _totalAmount = _totalAmount -
+            listCarts.list[index].quantity *
+                double.parse(listCarts.list[index].product.price);
+        listCarts.list.removeAt(index);
+    } else {
+      Utils.showToast(
+          "No se pudo eliminar el producto " +
+              listCarts.list[index].product.name +
+              " del carrito.",
+          Colors.white,
+          Colors.red);
+    }
+    setState(() {
+      if (listCarts.list.length == 0) {
+        listCarts.list = List<Cart>();
+      }
+    });
+  }
+
+  initArrayListOfUpdates() {
+    cartsUpdates = List.filled(listCarts.list.length, 0);
+  }
+
+  Future<bool> onWillPop() async {
+    Utils.showLoading(context);
+    await updatesCarts();
+    Utils.hideLoading(context);
+    Navigator.of(context).pop(true);
+  }
+
+  Future updatesCarts() async {
+    for(int i = 0; i< cartsUpdates.length; i++) {
+      if (cartsUpdates[i] == 1) {
+        await _updateCart(i, listCarts.list[i].quantity);
+        print(listCarts.list[i].product.name);
+      }
+    }
+  }
+
+  Future _updateCart(int index, int amount) async {
+    final id = listCarts.list[index].product.id;
+    ResponseDto responseDto = await _apiCart.removeProducCart(id);
+    if (NetworkUtils.isReqSuccess(responseDto.code)) {
+      await _apiCart.addProductCart(amount, id);
+    }
+  }
+
+  emptyCart() {
+    if (listCarts.list.isNotEmpty) {
+      Utils.showLoading(context);
+      emptyCartApi();
+      initArrayListOfUpdates();
+      
+    }
+  }
+
+  void emptyCartApi() async {
+    ResponseDto responseDto = await _apiCart.emptyCart();
+    if (NetworkUtils.isReqSuccess(responseDto.code)) {
+      listCarts.list = List<Cart>();
+      Utils.hideLoading(context);
+      setState(() {}); 
+    }   
   }
 }

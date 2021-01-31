@@ -11,6 +11,8 @@ import 'package:appjeshua/src/presentation/pages/frequent_quetions_page.dart';
 import 'package:appjeshua/src/presentation/pages/help_page.dart';
 import 'package:appjeshua/src/presentation/pages/history_order_page.dart';
 import 'package:appjeshua/src/presentation/pages/home_page.dart';
+import 'package:appjeshua/src/presentation/pages/list_billing_address_page.dart';
+import 'package:appjeshua/src/presentation/pages/list_delivery_address_page.dart';
 import 'package:appjeshua/src/presentation/pages/login_page.dart';
 import 'package:appjeshua/src/presentation/pages/main_page.dart';
 import 'package:appjeshua/src/presentation/pages/notification_page.dart';
@@ -54,5 +56,6 @@ Map<String, WidgetBuilder> getApplicationRoutes() => <String, WidgetBuilder>{
       'detail_order': (BuildContext context) => DetailOrder(),
       'details_profile': (BuildContext context) => DetailsProfilePage(),
       'edit_profile': (BuildContext context) => EditProfilePage(),
-      'list_billing_address_page': (BuildContext context) => ListBillingAd
+      'list_billing_address_page': (BuildContext context) => ListBillingAddressPage(),
+      'list_delivery_address_page': (BuildContext context) => ListDeliveryAddressPage(),
     };

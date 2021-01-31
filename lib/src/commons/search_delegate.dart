@@ -12,6 +12,13 @@ class DataSearch extends SearchDelegate {
   List<Product> _list = List();
   ApiProduct api = ApiProduct();
 
+  final String filter;
+
+  DataSearch(this.filter);
+
+  @override
+  String get searchFieldLabel => 'Buscar productos';
+
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
@@ -38,8 +45,8 @@ class DataSearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    final Map<String, String> params = {'queryparam': query};
-    return ContentListProduct(params: params);
+    Map<String, String> params = {'queryparam': query, 'category': filter, 'title': 'Ofertas'};
+    return ContentListProduct(params: params);  
   }
 
     @override
@@ -49,18 +56,16 @@ class DataSearch extends SearchDelegate {
     }
 
     return FutureBuilder(
-        future: api.searchProductsByQueryParam(query, 10),
+        future: api.searchProductsByQueryParam(query, 20),
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
             Products products = snapshot.data;
             _list = products.list;
-
             final listSuggestions = (query.isEmpty)
                 ? []
                 : _list
-                    .where((p) =>
-                        p.name.toLowerCase().contains(query.toLowerCase()) || 
-                        p.sku.toLowerCase().contains(query.toLowerCase()))
+                    .where((p) => 
+                         (filter == 'none' || p.slugCategory == filter)) 
                     .toList();
 
             return Padding(

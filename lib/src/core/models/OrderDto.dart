@@ -10,7 +10,7 @@ class OrderDto {
   String total;
   String paid;
   String create;
-  int dayExpired;
+  String dayExpired;
 
   OrderDto.fromJson(Map<String, dynamic> snapshot) {
     id = snapshot['id'];
@@ -18,7 +18,7 @@ class OrderDto {
     total = setPrice(snapshot['total']);
     create = snapshot['date'] == null ? _getDateFormat() : snapshot['date'];
     paid = snapshot['pay_status'];
-    dayExpired = snapshot['days_expired'];
+    dayExpired = snapshot['date'];
   }
 }
 
@@ -44,28 +44,13 @@ class Orders {
 
 void setOrderData(Map<String, dynamic> snapshot) {
     var user = User();
-    var shipping = DeliveryAddress();
-    var billing = BillingAddress(); 
-
     user.date = snapshot['date'];
     user.lastOrder = snapshot['id'];
     user.payment = snapshot['pay_method'];
     user.carts = Carts.fromJsonListOrderDetail(snapshot['details']);
-
-    shipping.street = snapshot['shippingAddress']['street'];
-    shipping.inside = snapshot['shippingAddress']['interior'];
-    shipping.outside = snapshot['shippingAddress']['exterior'];
-    shipping.colony = snapshot['shippingAddress']['colony'];
-    shipping.city = snapshot['shippingAddress']['city'];
-    shipping.postal = snapshot['shippingAddress']['postal'];
-
-    billing.rfc = snapshot['billingAddress']['rfc'];
-    billing.street = snapshot['billingAddress']['street'];
-    billing.inside = snapshot['billingAddress']['interior'];
-    billing.outside = snapshot['billingAddress']['exterior'];
-    billing.colony = snapshot['billingAddress']['colony'];
-    billing.city = snapshot['billingAddress']['city'];
-    billing.postal = snapshot['billingAddress']['postal'];
+  
+    user.deliveryAddress = snapshot['shippingAddress'] == null ? DeliveryAddress() : DeliveryAddress.fromJson(snapshot['shippingAddress']);
+    user.billingAddress = snapshot['billingAddress'] == null ? BillingAddress() : BillingAddress.fromJson(snapshot['billingAddress']);
 }
 
 String setPrice(dynamic price) {

@@ -81,17 +81,13 @@ class ApiBillingAddress {
   }
 
   Future<BillingAddresses> listBillingAddress() async {
-    final path = api.urlBillingAddress;
-    final url = Uri.http(api.urlBase, path);
-    final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: user.token});
+    final user = User();
+    final url = Uri.http(api.urlBase, api.urlBillingAddress + "/${user.userId}");
+    
+    final response = await http.get(url);
     final decodedData = json.decode(response.body);
-    final jsonList = decodedData['billingaddress'];
-    BillingAddresses listAddress;
-    if (jsonList.toString() == '[]') {
-      listAddress = BillingAddresses.fromJsonList(jsonList);
-    } else {
-      listAddress = BillingAddresses.fromJsonList(jsonList['data']);
-    }
+    
+    final listAddress = BillingAddresses.fromJsonList(decodedData);
 
     return listAddress;
   }

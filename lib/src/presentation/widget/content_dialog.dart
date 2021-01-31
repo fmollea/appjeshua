@@ -29,11 +29,10 @@ class ContentDialog extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image(
-              image: AssetImage(pathImg),
-              height: 72,
-              width: 72,
-              fit: BoxFit.cover),
+          Icon(
+              Icons.check_circle_outline,
+              color: Utils.redColor,
+              size: 72),
           Container(height: 12),
           Text(title,
               style: TextStyle(

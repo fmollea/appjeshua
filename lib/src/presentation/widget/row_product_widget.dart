@@ -1,3 +1,4 @@
+import 'package:appjeshua/src/core/services/apiCart.dart';
 import 'package:flutter/material.dart';
 import 'package:appjeshua/src/commons/NetworkUtils.dart';
 import 'package:appjeshua/src/commons/Utils.dart';
@@ -29,19 +30,24 @@ class _RowProductWidgetState extends State<RowProductWidget> {
 
     return InkResponse(
       child: Card(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-          FadeInImage(
-            image: NetworkImage(Utils.getProductImage(item.path, item.id)),
-            placeholder: AssetImage('assets/not_found.png'),
-            width: 100,
-            height: 100,
-            fit: BoxFit.contain,
-          ),
-          _drawInfo(),
-          _favourite()
-      ])),
+        child: Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+              FadeInImage(
+                image: NetworkImage(Utils.getProductImage(item.path, item.id)),
+                placeholder: AssetImage('assets/not_found.png'),
+                width: 100,
+                height: 100,
+                fit: BoxFit.contain,
+              ),
+              _drawInfo(),
+              _favourite()
+            ]),
+          _drawButtonAddtoCart()  
+          ],
+        )),
       onTap: () => _onTileClicked(item.slug),
     );
   }
@@ -121,6 +127,42 @@ class _RowProductWidgetState extends State<RowProductWidget> {
       return utils.getIcon("is_fav", Utils.redColor);
     } else {
       return utils.getIcon("not_fav", Utils.redColor);
+    }
+  }
+
+  _drawButtonAddtoCart() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0, right: 12),
+      child: InkResponse(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Icon(Icons.shopping_cart, color: Utils.primaryColor,),
+              Text('  Agregar', style: TextStyle(color: Utils.primaryColor, fontWeight: FontWeight.bold, fontSize: 18))
+            ]     
+        ),
+        onTap: addCart,
+      ),
+    );
+  }
+
+  void addCart() async {
+    if (item.isAvaiable) {
+      Utils.showLoading(context);
+      final apiCart = ApiCart();
+      final response =
+          await apiCart.addProductCart(1, item.id);
+      if (NetworkUtils.isReqSuccess(response.code)) {
+        Utils.showToast("¡Se agregó al carrito!",
+            Colors.white, Colors.green);
+        Utils.hideLoading(context);   
+      } else {
+        Utils.showToast(item.name + " no se pudo agregar al carrito.",
+            Colors.white, Colors.red);
+        Utils.hideLoading(context);
+      } 
+    } else {
+      Utils.showToast("Producto no disponible.", Colors.white, Colors.red);
     }
   }
 }

@@ -1,53 +1,86 @@
 class BillingAddress {
 
-  BillingAddress._private();
-
-  static final BillingAddress _instance = BillingAddress._private();
-
-  factory BillingAddress() {
-    return _instance;
-  }  
-
-  String type;
-  String street;
-  String city;
+  int id;
+  String nombre;
+  String apellido;
+  String address;
+  String nroExt;
+  String nroInt;
   String colony;
-  String country;
-  String outside; //exterior
-  String inside; //interior
-  String postal;
-  String razon;
-  String rfc;
+  String municipality;
   String state;
-  bool ticket;
+  String city;
+  String rfc;
+  String phone;
+  String postal;
+  int billingDefault;
+
+  BillingAddress();
+
+  BillingAddress.fromJson(Map<String, dynamic> snapshot) {
+    id = snapshot["id"];
+    nombre = snapshot["nombre"];
+    apellido = snapshot["apellido"];
+    address = snapshot["address"];
+    nroExt = snapshot["nro_ext"];
+    nroInt = snapshot["nro_int"];
+    rfc = snapshot['rfc'];
+    colony = snapshot["colony"];
+    municipality = snapshot["municipality"];
+    state = snapshot["state"];
+    city = snapshot["city"];
+    phone = snapshot["phone"];
+    postal = snapshot["postal"];
+    billingDefault = snapshot["default"];
+  }
 
   Map<String, dynamic> toJson() => {
-        "city": city,
+        "id": id,
+        "nombre": nombre,
+        "apellido": apellido,
+        "address": address,
+        "nro_ext": nroExt,
+        "nro_int": nroInt,
         "colony": colony,
-        "country": country,
-        "exterior": outside,
-        "interior": inside,
-        "postal": postal,
-        "razon": razon,
-        "rfc": rfc,
+        "municipality": municipality,
         "state": state,
-        "street": street,
-        "type": type,
-        "ticket": ticket,
+        "rfc": rfc,
+        "city": city,
+        "phone": phone,
+        "postal": postal,
+        "default": billingDefault,
     };
 
   changeNullToEmpty() {
-    city = city == null ? "" : city;
-    colony = colony == null ? "" : colony;
-    country = country == null ? "" : country;
-    outside = outside == null ? "" : outside;
-    inside = inside == null ? "" : inside;
-    postal = postal == null ? "" : postal;
-    razon = razon == null ? "" : razon;
+    id = id == null ? 0 : id;
     rfc = rfc == null ? "" : rfc;
+    nombre = nombre == null ? "" : nombre;
+    apellido = apellido == null ? "": apellido;
+    address = address == null ? "" : address;
+    nroExt = nroExt == null ? "" : nroExt;
+    nroInt = nroInt == null ? "" : nroInt;
+    colony = colony == null ? "" : colony;
+    municipality = municipality == null ? "" : municipality;
     state = state == null ? "" : state;
-    street = street == null ? "" : street;
-    type = type == null ? "" : type;
-    ticket = ticket == null ? false : ticket;
+    city = city == null ? "" : city;
+    phone = phone == null ? "" : phone;
+    postal = postal == null ? "" : postal;
+    billingDefault = billingDefault == null ? 0 : billingDefault;
   }  
+}
+
+class BillingAddresses {
+
+  List<BillingAddress> list = List();
+
+  BillingAddresses();
+
+  BillingAddresses.fromJsonList(List<dynamic> jsonList) {
+    if (jsonList == null ) return;
+
+    jsonList.forEach((item) {
+      final deliveryAddress = BillingAddress.fromJson(item);
+      list.add(deliveryAddress);
+    });
+  }
 }

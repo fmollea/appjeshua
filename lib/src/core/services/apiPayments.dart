@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:appjeshua/src/core/models/OrderDto.dart';
-import 'package:appjeshua/src/core/models/billingAddress.dart';
-import 'package:appjeshua/src/core/models/deliveryAddress.dart';
 import 'package:appjeshua/src/core/models/paymentMethod.dart';
 import 'package:appjeshua/src/core/models/user.dart';
 import 'api.dart';
@@ -11,8 +9,6 @@ import 'package:http/http.dart' as http;
 class ApiPayments {
   final api = Api();
   User user = User();
-  BillingAddress billingAddress = BillingAddress();
-  DeliveryAddress deliveryAddress = DeliveryAddress();
 
   Future<PaymentMethods> listPaymentMethods() async {
     final path = api.urlPaymentMethods;
@@ -45,15 +41,15 @@ class ApiPayments {
   }
 
   Map<String, dynamic> toParams() => {
-        "products": List<dynamic>.from(user.carts.map((cart) => cart.toJson())),  
-        "paymentMethod": user.paymentId,
-        "comment": "",
-        "totalAmount": user.obtainTotal(),
-        "clientId": user.userId,
-        "shippingAddress": user.billingId,
-        "billingAddress": user.deliveryId,
-        "typeBilling": "factura",
-        "typeShipping": "acude",
-        "sucursalId": 1,
+      "products": List<dynamic>.from(user.carts.map((cart) => cart.toJson())),  
+      "paymentMethod": user.paymentId,
+      "comment": "",
+      "totalAmount": user.obtainTotal(),
+      "clientId": user.userId,
+      "shippingAddress": user.billingId,
+      "billingAddress": user.deliveryId,
+      "typeBilling": "factura",
+      "typeShipping": "acude",
+      "sucursalId": 1,
     };
 }

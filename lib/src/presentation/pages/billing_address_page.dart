@@ -11,7 +11,13 @@ class BillingAddressPage extends StatefulWidget {
 }
 
 class _BillingAddressPageState extends State<BillingAddressPage> {
-  TextEditingController street = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+  
+  /*TextEditingController street = TextEditingController();
   TextEditingController city = TextEditingController();
   TextEditingController colony = TextEditingController();
   TextEditingController noInterior = TextEditingController();
@@ -124,5 +130,5 @@ class _BillingAddressPageState extends State<BillingAddressPage> {
 
   void _changesValue(bool newValue) => setState(() {
     ticket = newValue;
-  });
+  }); */
 }

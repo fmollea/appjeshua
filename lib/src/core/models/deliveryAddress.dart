@@ -1,42 +1,95 @@
 class DeliveryAddress {
 
-  DeliveryAddress._private();
+  int id;
+  String nombre;
+  String apellido;
+  String rfc;
+  String razon;
+  String type;
+  String address;
+  String noExt;
+  String noInt;
+  dynamic colony;
+  dynamic municipality;
+  String state;
+  String city;
+  dynamic phone;
+  String postal;
+  int predeterminada;
 
-  static final DeliveryAddress _instance = DeliveryAddress._private();
+  DeliveryAddress();
 
-  factory DeliveryAddress() {
-    return _instance;
+  DeliveryAddress.fromJson(Map<String, dynamic> snapshot) {
+    id = snapshot["id"];
+    nombre = snapshot["nombre"];
+    apellido = snapshot["apellido"];
+    rfc = snapshot["rfc"];
+    razon = snapshot["razon"];
+    type = snapshot["type"];
+    address = snapshot["address"];
+    noExt = snapshot["no_ext"];
+    noInt = snapshot["no_int"];
+    colony = snapshot["colony"];
+    municipality = snapshot["municipality"];
+    state = snapshot["state"];
+    city = snapshot["city"];
+    phone = snapshot["phone"];
+    postal = snapshot["postal"];
+    predeterminada = snapshot["predeterminada"];
   }
 
-  String street;
-  String city;
-  String colony;
-  String country;
-  String inside;
-  String outside;
-  String postal;
-  String state;
-
   Map<String, dynamic> toJson() => {
-        "city": city,
-        "colony": colony,
-        "country": country,
-        "exterior": outside,
-        "interior": inside,
-        "postal": postal,
-        "state": state,
-        "street": street,
-    };
+    "id": id,
+    "nombre": nombre,
+    "apellido": apellido,
+    "rfc": rfc,
+    "razon": razon,
+    "type": type,
+    "address": address,
+    "no_ext": noExt,
+    "no_int": noInt,
+    "colony": colony,
+    "municipality": municipality,
+    "state": state,
+    "city": city,
+    "phone": phone,
+    "postal": postal,
+    "predeterminada": predeterminada,
+  };
 
  changeNullToEmpty() {
-    city = city == null ? "" : city;
+    id = id == null ? 0 : id;
+    nombre = nombre == null ? "" : nombre;
+    apellido = apellido == null ? "" : apellido;
+    rfc = rfc == null ? "" : rfc;
+    razon = razon == null ? "" : razon;
+    type = type == null ? "" : type;
+    address = address == null ? "" : address;
+    noExt = noExt == null ? "" : noExt;
+    noInt = noInt == null ? "" : noInt;
     colony = colony == null ? "" : colony;
-    country = country == null ? "" : country;
-    outside = outside == null ? "" : outside;
-    inside = inside == null ? "" : inside;
-    postal = postal == null ? "" : postal;
+    municipality = municipality == null ? "" : municipality;
     state = state == null ? "" : state;
-    street = street == null ? "" : street;
- } 
+    city = city == null ? "" : city;
+    phone = phone == null ? "" : phone;
+    postal = postal == null ? "" : postal;
+    predeterminada = predeterminada == null ? 0 : predeterminada;
+  } 
+}
 
+class DeliveryAddresses {
+
+  List<DeliveryAddress> list = List();
+
+  DeliveryAddresses();
+
+  DeliveryAddresses.fromJsonList(List<dynamic> jsonList) {
+    if (jsonList == null ) return;
+
+
+    jsonList.forEach((item) {
+      final deliveryAddress = DeliveryAddress.fromJson(item);
+      list.add(deliveryAddress);
+    });
+  }
 }

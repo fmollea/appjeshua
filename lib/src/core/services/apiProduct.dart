@@ -18,7 +18,9 @@ class ApiProduct {
       _page: page.toString(),
     };
 
-    final buildPath = '${api.urlProduct}/${user.idSucursal}/${user.userId}';
+    if (user.filterUrl == null) user.filterUrl = 'a-z';
+
+    final buildPath = '${api.urlProduct}/${user.idSucursal}/${user.filterUrl}/${user.userId}';
     final url = Uri.https(api.urlBase, buildPath, params);
 
     final response = await http.get(url);
@@ -38,17 +40,19 @@ class ApiProduct {
 
     var products = Products();
 
+    if (user.filterUrl == null) user.filterUrl = 'a-z';
+
     final params = {
       _page: page.toString(),
     };
 
-    final buildPath = '${api.urlProductByCategory}/$slugCategory/${user.idSucursal}/${user.userId}';
+    final buildPath = '${api.urlProductByCategory}/$slugCategory/${user.idSucursal}/${user.userId}/${user.filterUrl}';
     final url = Uri.https(api.urlBase, buildPath, params);
 
     final response = await http.get(url);
     final decodedData = json.decode(response.body);
 
-    if (decodedData['data'] == null) {
+    if (decodedData['data'] == null || (decodedData['data'] as List<dynamic>).isEmpty) {
       products = Products.fromJsonList(null);
     } else {
       products = Products.fromJsonList(decodedData['data']);

@@ -64,33 +64,25 @@ class _LoginPageState extends State<LoginPage> implements LoginPageView {
   Widget _textFieldUsername() {
     return TextField(
       focusNode: emailFocus,
+      controller:  _presenter.name,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
           labelText: 'Usuario',
           labelStyle: TextStyle(color: Utils.primaryColor),
-          prefixIcon: utils.getIcon('person', Utils.redColor)),
-      onChanged: (value) {
-        setState(() {
-          _presenter.name.text = value;
-        });
-      },
+          prefixIcon: utils.getIcon('person', Utils.redColor))
     );
   }
 
   Widget _textFieldPassword() {
     return TextField(
       focusNode: passFocus,
+      controller: _presenter.password,
       obscureText: _isObscureText,
       decoration: InputDecoration(
           labelText: 'Contraseña',
           labelStyle: TextStyle(color: Utils.primaryColor),
           suffixIcon: _buildPasswordIcon(),
-          prefixIcon: utils.getIcon('password', Utils.redColor)),
-      onChanged: (value) {
-        setState(() {
-          _presenter.password.text= value;
-        });
-      },
+          prefixIcon: utils.getIcon('password', Utils.redColor))
     );
   }
 

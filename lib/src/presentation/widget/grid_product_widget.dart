@@ -1,11 +1,13 @@
 import 'package:appjeshua/src/core/models/product.dart';
+import 'package:appjeshua/src/presentation/pages/pills_page.dart';
 import 'package:flutter/material.dart';
 import 'package:appjeshua/src/presentation/widget/card_product_widget.dart';
 
 class GridProductWidget extends StatelessWidget {
   final List<Product> categories;
+  PillsPage pillsPage;
 
-  GridProductWidget({@required this.categories});
+  GridProductWidget({@required this.categories, this.pillsPage});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class GridProductWidget extends StatelessWidget {
                   elevation: 4.0,
                   child: Container(
                     padding: const EdgeInsets.all(15.0),
-                    child: CardProductWidget(item: data),
+                    child: CardProductWidget(item: data, pillsPage: pillsPage),
                   ),
                 ))
             .toList(),

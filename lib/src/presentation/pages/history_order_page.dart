@@ -68,7 +68,7 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
             children: [
               _drawTopCard(item.id),
               _drawCenterCard(item.create, item.total),
-              _drawDayExpired(item.dayExpired),
+           //   _drawDayExpired(item.dayExpired),
               _drawBottomCard(item.paid, item.id)
             ],
           ))),
@@ -145,13 +145,13 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
     Navigator.pushNamed(context, 'detail_order');
   }
 
-  _drawDayExpired(int dayExpired) {
+  _drawDayExpired(String dayExpired) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: 
         Align(
           alignment: Alignment.topLeft,
-          child: Text('Días vencidos: $dayExpired', 
+          child: Text('Fecha: $dayExpired', 
             style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey[800])),
         ),
     );

@@ -1,4 +1,7 @@
 import 'package:appjeshua/src/core/models/cart.dart';
+import 'package:appjeshua/src/core/models/deliveryAddress.dart';
+
+import 'billingAddress.dart';
 
 class User {
   User._private();
@@ -26,6 +29,8 @@ class User {
   String idOrder;
   String tokenFcm;
   String filterUrl;
+  BillingAddress billingAddress;
+  DeliveryAddress deliveryAddress;
 
   String obtainTotal() {
     var _totalAmount = 0.0;

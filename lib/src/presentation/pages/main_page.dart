@@ -5,6 +5,7 @@ import 'package:appjeshua/src/presentation/pages/pills_page.dart';
 import 'package:appjeshua/src/presentation/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -59,8 +60,20 @@ class _MainPageState extends State<MainPage> {
 
   //events
   void onTabTapped(int index) {
-    setState(() {
+    if (index == 3) {
+      _call(Utils.urlCellphone());
+    } else {
+      setState(() {
       _currentIndex = index;
     });
+    }
+  }
+
+  _call(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

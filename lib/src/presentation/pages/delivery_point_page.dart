@@ -11,7 +11,13 @@ class DeliveryPointPage extends StatefulWidget {
 }
 
 class _DeliveryPointPageState extends State<DeliveryPointPage> {
-  TextEditingController street = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+
+ /* TextEditingController street = TextEditingController();
   TextEditingController city = TextEditingController();
   TextEditingController colony = TextEditingController();
   TextEditingController noInterior = TextEditingController();
@@ -96,5 +102,5 @@ class _DeliveryPointPageState extends State<DeliveryPointPage> {
     noExterior.text = address.outside;
     cdgPostal.text = address.postal;
     state.text = address.state;
-  }
+  }]*/
 }

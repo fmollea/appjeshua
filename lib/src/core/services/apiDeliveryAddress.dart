@@ -73,18 +73,14 @@ class ApiDeliveryAddress {
   }
 
   Future<DeliveryAddresses> listDeliveryAddress() async {
-    final path = api.urlDeliveryAddress;
-    final url = Uri.http(api.urlBase, path);
-    final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: user.token});
-    final decodedData = json.decode(response.body);
-    final jsondata = decodedData['deliveryaddress'];
-    DeliveryAddresses listAddress;
-    if (jsondata.toString() == '[]') {
-      listAddress = DeliveryAddresses.fromJsonList(jsondata);
-    } else {
-      listAddress = DeliveryAddresses.fromJsonList(jsondata['data']);
-    }
+    final user = User();
+    final url = Uri.http(api.urlBase, api.urlDeliveryAddress + "/${user.userId}");
 
+    final response = await http.get(url);
+    final decodedData = json.decode(response.body);
+
+    final listAddress = DeliveryAddresses.fromJsonList(decodedData);
+    
     return listAddress;
   }
 

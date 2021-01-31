@@ -9,8 +9,8 @@ import 'package:intl/intl.dart';
 
 class PurchaseMadePage extends StatelessWidget {
   final _user = User();
-  final _shipping = DeliveryAddress();
-  final _billing = BillingAddress();
+//  final _user.deliveryAddress = DeliveryAddress();
+//  final _user.billingAddress = BillingAddress();
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +94,7 @@ class PurchaseMadePage extends StatelessWidget {
   }
 
   _drawCardDeliveryAddress() {
-    _shipping.changeNullToEmpty();
+    _user.deliveryAddress.changeNullToEmpty();
     return Card(
       elevation: 4,
       child: Padding(
@@ -104,9 +104,9 @@ class PurchaseMadePage extends StatelessWidget {
           children: [
             Text('${_user.name}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
             Container(height: 8),
-            Text('  ${_shipping.street}, ${_shipping.inside}, ${_shipping.outside}', style: TextStyle(fontSize: 18)),
-            Text('  ${_shipping.colony}, ${_shipping.city}', style: TextStyle(fontSize: 18)),
-            Text('  C.P. ${_shipping.postal}', style: TextStyle(fontSize: 18)),
+            Text('  ${_user.deliveryAddress.address}, ${_user.deliveryAddress.noInt}, ${_user.deliveryAddress.noExt}', style: TextStyle(fontSize: 18)),
+            Text('  ${_user.deliveryAddress.colony}, ${_user.deliveryAddress.city}', style: TextStyle(fontSize: 18)),
+            Text('  C.P. ${_user.deliveryAddress.postal}', style: TextStyle(fontSize: 18)),
             Container(height: 4),
             Text('  ${_user.email}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Utils.primaryColor)),
           ],
@@ -116,7 +116,7 @@ class PurchaseMadePage extends StatelessWidget {
   }
 
   _drawCardBillingInfo() {
-    _billing.changeNullToEmpty();
+    _user.billingAddress.changeNullToEmpty();
     return Card(
       elevation: 4,
       child: Padding(
@@ -126,12 +126,12 @@ class PurchaseMadePage extends StatelessWidget {
           children: [
             Row(
               children: [
-                Expanded(child: Text('  RFC: ${_billing.rfc}', style: TextStyle(fontSize: 18))),
+                Expanded(child: Text('  RFC: ${_user.billingAddress.rfc}', style: TextStyle(fontSize: 18))),
               ],
             ),
-            Text('  ${_billing.street}, ${_billing.inside}, ${_billing.outside}', style: TextStyle(fontSize: 18)),
-            Text('  ${_billing.colony}, ${_billing.city}', style: TextStyle(fontSize: 18)),
-            Text('  C.P. ${_billing.postal}', style: TextStyle(fontSize: 18)),
+            Text('  ${_user.billingAddress.address}, ${_user.billingAddress.nroInt}, ${_user.billingAddress.nroExt}', style: TextStyle(fontSize: 18)),
+            Text('  ${_user.billingAddress.colony}, ${_user.billingAddress.city}', style: TextStyle(fontSize: 18)),
+            Text('  C.P. ${_user.billingAddress.postal}', style: TextStyle(fontSize: 18)),
           ],
         ),
       ),
@@ -141,15 +141,13 @@ class PurchaseMadePage extends StatelessWidget {
   _drawBottom(BuildContext context) => 
     Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Card(elevation: 4,
-          child: Container(
+      child: Container(
               padding: EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 24),
-              color: Colors.white,
               child: ButtonWidget(() {
           Navigator.of(context).pushNamedAndRemoveUntil(
             'main_page', ModalRoute.withName('login'));
           }, Utils.primaryColor, "Seguir Comprando"),
-      )),
+      ),
     );
 
     String _getDateFormat() => DateFormat('dd-MM-yyyy')

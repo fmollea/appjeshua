@@ -25,6 +25,7 @@ class Utils {
   static String getPerfilImage(String path, int id) => "https://jeshuamedic.com/4dministraci0n/public/img/user/$id/$path";
   static String getCategoryImage(String path) => "https://app.jeshuamedic.com/assets/images/icons/$path";
   static String getProductImage(String path, int id) => "https://jeshuamedic.com/4dministraci0n/public/img/products/$id/$path";
+  static String urlCellphone() => 'tel:7151530231';
 
   //maps of icons
   final _icons = <String, IconData>{

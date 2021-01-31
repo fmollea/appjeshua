@@ -9,6 +9,7 @@ class Product {
   String priceWithOutIva;
   String slug;
   String department;
+  String slugCategory;
   bool isAvaiable;
   bool isFav;
 
@@ -17,6 +18,7 @@ class Product {
     name = snapshot['name'];
     sku = snapshot['sku'];
     description = snapshot['description'];
+    slugCategory = snapshot['categories'][0]['slug'];
     path = snapshot['coverImage'] == null ? '' : snapshot['coverImage'];
     price = setPrice(snapshot['price']);
     priceWithOutIva = setPrice(snapshot['priceWithoutIva']);

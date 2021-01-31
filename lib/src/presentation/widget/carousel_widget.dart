@@ -31,7 +31,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
               options: CarouselOptions(
                   aspectRatio: 2.4,
                   autoPlay: true,
-                  enlargeCenterPage: true,
+                  enlargeCenterPage: false,
                   autoPlayInterval: Duration(seconds: 3),
                   onPageChanged: (index, reason) {
                     setState(() {

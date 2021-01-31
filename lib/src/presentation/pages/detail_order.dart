@@ -1,6 +1,4 @@
 import 'package:appjeshua/src/commons/Utils.dart';
-import 'package:appjeshua/src/core/models/billingAddress.dart';
-import 'package:appjeshua/src/core/models/deliveryAddress.dart';
 import 'package:appjeshua/src/core/models/user.dart';
 import 'package:appjeshua/src/core/services/apiOrder.dart';
 import 'package:appjeshua/src/presentation/widget/row_product_order.dart';
@@ -10,8 +8,6 @@ import 'package:intl/intl.dart';
 class DetailOrder extends StatelessWidget {
 
   User _user = User();
-  DeliveryAddress _shipping = DeliveryAddress();
-  BillingAddress _billing = BillingAddress(); 
   
   @override
   Widget build(BuildContext context) {
@@ -103,7 +99,7 @@ class DetailOrder extends StatelessWidget {
   }
 
   _drawCardDeliveryAddress() {
-    _shipping.changeNullToEmpty();
+    _user.deliveryAddress.changeNullToEmpty();
     return Card(
       elevation: 4,
       child: Padding(
@@ -113,9 +109,9 @@ class DetailOrder extends StatelessWidget {
           children: [
             Text('${_user.name}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
             Container(height: 8),
-            Text('  ${_shipping.street}, ${_shipping.inside}, ${_shipping.outside}'),
-            Text('  ${_shipping.colony}, ${_shipping.city}'),
-            Text('  C.P. ${_shipping.postal}'),
+            Text('  ${_user.deliveryAddress.address}, ${_user.deliveryAddress.noInt}, ${_user.deliveryAddress.noExt}'),
+            Text('  ${_user.deliveryAddress.colony}, ${_user.deliveryAddress.city}'),
+            Text('  C.P. ${_user.deliveryAddress.postal}'),
             Container(height: 4),
             Text('  ${_user.email}', style: TextStyle(fontWeight: FontWeight.bold, color: Utils.primaryColor)),
           ],
@@ -125,7 +121,7 @@ class DetailOrder extends StatelessWidget {
   }
 
   _drawCardBillingInfo() {
-    _billing.changeNullToEmpty();
+    _user.billingAddress.changeNullToEmpty();
     return Card(
       elevation: 4,
       child: Padding(
@@ -135,12 +131,12 @@ class DetailOrder extends StatelessWidget {
           children: [
             Row(
               children: [
-                Expanded(child: Text('  RFC: ${_billing.rfc}')),
+                Expanded(child: Text('  RFC: ${_user.billingAddress.rfc}')),
               ],
             ),
-            Text('  ${_billing.street}, ${_billing.inside}, ${_billing.outside}'),
-            Text('  ${_billing.colony}, ${_billing.city}'),
-            Text('  C.P. ${_shipping.postal}'),
+            Text('  ${_user.billingAddress.address}, ${_user.billingAddress.nroInt}, ${_user.billingAddress.nroExt}'),
+            Text('  ${_user.billingAddress.colony}, ${_user.billingAddress.city}'),
+            Text('  C.P. ${_user.deliveryAddress.postal}'),
           ],
         ),
       ),
