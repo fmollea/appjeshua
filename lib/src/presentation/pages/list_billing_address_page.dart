@@ -23,12 +23,6 @@ class _ListBillingAddressPageState extends State<ListBillingAddressPage> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Direcciones de facturación", style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold)),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.add),
-              onPressed: addAddress,
-            )
-          ],
         ),
         body: _drawScreen(),
         bottomNavigationBar: Padding(
@@ -77,7 +71,7 @@ class _ListBillingAddressPageState extends State<ListBillingAddressPage> {
             child: Card( child:
             ListTile(
               onTap: addAddress,
-              leading: Icon(Icons.add_circle_outline, color: Utils.primaryColor),
+              leading: Icon(Icons.add_circle_outline, color: Utils.blueAccent),
               title: Text("Agregar dirección", style: TextStyle(color: Colors.black87, fontSize: 18.0)),
               subtitle: Text("Agregue la dirección de facturación", style: TextStyle(color: Colors.black54, fontSize: 16.0)),
             )
@@ -103,7 +97,7 @@ class _ListBillingAddressPageState extends State<ListBillingAddressPage> {
     Icon icon;
 
     if (item.billingDefault != 0) {
-      icon = Icon(Icons.speaker_notes, color: Utils.primaryColor);
+      icon = Icon(Icons.speaker_notes, color: Utils.blueAccent);
       user.billingId = item.id;
       user.billingAddress = item;
     } else {

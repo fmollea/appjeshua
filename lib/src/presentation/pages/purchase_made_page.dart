@@ -1,6 +1,4 @@
 import 'package:appjeshua/src/commons/Utils.dart';
-import 'package:appjeshua/src/core/models/billingAddress.dart';
-import 'package:appjeshua/src/core/models/deliveryAddress.dart';
 import 'package:appjeshua/src/core/models/user.dart';
 import 'package:appjeshua/src/presentation/widget/button_widget.dart';
 import 'package:appjeshua/src/presentation/widget/row_product_order.dart';
@@ -115,6 +113,18 @@ class PurchaseMadePage extends StatelessWidget {
     );
   }
 
+  _drawCardAcude() {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListTile(
+          leading: Image.asset("assets/icon_tienda.png"),
+          title: Text(_user.sucursalName),
+        ),
+      ),
+    );
+  }
+
   _drawCardBillingInfo() {
     _user.billingAddress.changeNullToEmpty();
     return Card(
@@ -166,8 +176,8 @@ class PurchaseMadePage extends StatelessWidget {
 
   List<Widget> _listAux() => [
     _drawCardInfo(),
-    _titleSection('Enviado a: '),
-    _drawCardDeliveryAddress(),
+    _user.typeShipping == "acude" ? _titleSection('Acude a: ')  :_titleSection('Enviado a: '),
+    _user.typeShipping == "acude" ? _drawCardAcude() : _drawCardDeliveryAddress(),
     _titleSection('Datos de facturación: '),
     _drawCardBillingInfo(),
     _titleSection('Lista de productos: '),

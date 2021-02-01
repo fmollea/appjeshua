@@ -56,7 +56,7 @@ class DataSearch extends SearchDelegate {
     }
 
     return FutureBuilder(
-        future: api.searchProductsByQueryParam(query, 20),
+        future: api.searchProductsByQueryParam(query, 20, 1),
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
             Products products = snapshot.data;

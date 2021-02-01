@@ -5,12 +5,12 @@ import 'package:appjeshua/src/presentation/widget/content_delivery_address.dart'
 import 'package:appjeshua/src/presentation/widget/milestone_widget.dart';
 import 'package:flutter/material.dart';
 
-class DeliveryPointPage extends StatefulWidget {
+class DeliveryPage extends StatefulWidget {
   @override
-  _DeliveryPointPageState createState() => _DeliveryPointPageState();
+  _DeliveryPageState createState() => _DeliveryPageState();
 }
 
-class _DeliveryPointPageState extends State<DeliveryPointPage> {
+class _DeliveryPageState extends State<DeliveryPage> {
 
   @override
   Widget build(BuildContext context) {

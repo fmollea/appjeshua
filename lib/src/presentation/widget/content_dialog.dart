@@ -29,17 +29,23 @@ class ContentDialog extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
+          pathImg == "assets/icon_gracias.png" ? Icon(
               Icons.check_circle_outline,
               color: Utils.blueAccent,
-              size: 72),
+              size: 72) : 
+              Image.asset(
+              pathImg,
+              color: Utils.blueAccent,
+              width: 72,
+              height: 72),
           Container(height: 12),
           Text(title,
               style: TextStyle(
                   color: Utils.blueAccent,
                   fontSize: 22,
                   fontWeight: FontWeight.bold)),
-          Text(subtitle, style: TextStyle(color: Colors.black87, fontSize: 18)),
+          Container(height: 8),
+          Text(subtitle, style: TextStyle(color: Colors.black87, fontSize: 18), textAlign: TextAlign.center),
           Container(height: 16),
           FlatButton(
             child: Padding(

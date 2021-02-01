@@ -62,14 +62,18 @@ class ApiProduct {
   }
 
   Future<Products> searchProductsByQueryParam(
-      String query, int perpage) async {
+      String query, int perpage, int page) async {
 
-    final buildPath = '${api.urlProductSearch}/$query/$perpage/null/${user.idSucursal}/${user.userId}';
+    final params = {
+      _page: page.toString(),
+    };    
 
-    final url = Uri.https(api.urlBase, buildPath);
+    final buildPath = '${api.urlProductSearch}/$query/${user.userId}/null/$perpage/${user.idSucursal}/a-z';
+
+    final url = Uri.https(api.urlBase, buildPath, params);
     final response = await http.get(url);
     final decodedData = json.decode(response.body);
-    final products = Products.fromJsonList(decodedData);
+    final products = Products.fromJsonList(decodedData['data']);
 
     return products;
   }

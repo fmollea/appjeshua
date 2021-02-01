@@ -18,6 +18,8 @@ class User {
   String email;
   String image;
   int idSucursal;
+  String sucursalName;
+  String typeShipping;
   int deliveryId;
   int paymentId;
   String payment;

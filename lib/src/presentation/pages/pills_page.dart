@@ -109,9 +109,9 @@ class _PillsPageState extends State<PillsPage> {
         delegate: SliverChildListDelegate([
       CarouselWidget(
         items: [
-          Image(image: AssetImage('assets/slidedemo.png'), fit: BoxFit.fill),
-          Image(image: AssetImage('assets/slidedemo.png'), fit: BoxFit.fill),
-          Image(image: AssetImage('assets/slidedemo.png'), fit: BoxFit.fill),
+          _drawBannerImage("www.jeshuamedic.com/slide/1.png"),
+          _drawBannerImage("www.jeshuamedic.com/slide/2.png"),
+          _drawBannerImage("www.jeshuamedic.com/slide/3.png"),
         ],
       )
     ]));
@@ -196,5 +196,13 @@ class _PillsPageState extends State<PillsPage> {
     setState(() {
       
     });
+  }
+
+  _drawBannerImage(String path) {
+    return FadeInImage(
+      image: NetworkImage(path),
+      placeholder: AssetImage('assets/slidedemo.png'),
+      fit: BoxFit.fill,
+    );
   }
 }

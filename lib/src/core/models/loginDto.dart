@@ -22,6 +22,7 @@ class LoginDto {
     user.name = snapshot['fullname']; 
     user.email = snapshot['email'];
     user.idSucursal = snapshot['sucursal'];
+    user.sucursalName = snapshot['sucursal_name'];
     user.userId = snapshot['id'];
     user.image = snapshot['image'];
     user.deliveryId = snapshot['shippingAddress']['id'];

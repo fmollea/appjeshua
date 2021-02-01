@@ -1,6 +1,7 @@
+import 'package:appjeshua/src/presentation/pages/address_point_page.dart';
 import 'package:appjeshua/src/presentation/pages/billing_address_page.dart';
 import 'package:appjeshua/src/presentation/pages/category_page.dart';
-import 'package:appjeshua/src/presentation/pages/delivery_point_page.dart';
+import 'package:appjeshua/src/presentation/pages/delivery_page.dart';
 import 'package:appjeshua/src/presentation/pages/detail_order.dart';
 import 'package:appjeshua/src/presentation/pages/detail_product.dart';
 import 'package:appjeshua/src/presentation/pages/details_profile_page.dart';
@@ -39,7 +40,7 @@ Map<String, WidgetBuilder> getApplicationRoutes() => <String, WidgetBuilder>{
       'category_page': (BuildContext context) => CategoryPage(),
       'products_detail_page': (BuildContext context) => DetailProductPage(),
       'purchase_summary_page': (BuildContext context) => PurchaseSumaryPage(),
-      'delivery_point_page': (BuildContext context) => DeliveryPointPage(),
+      'delivery_point_page': (BuildContext context) => DeliveryPage(),
       'history_order_page': (BuildContext context) => HistoryOrderPage(),
       'payment_method_page': (BuildContext context) => PaymentMethodPage(),
       'purchase_confirmation_page': (BuildContext context) =>
@@ -57,5 +58,5 @@ Map<String, WidgetBuilder> getApplicationRoutes() => <String, WidgetBuilder>{
       'details_profile': (BuildContext context) => DetailsProfilePage(),
       'edit_profile': (BuildContext context) => EditProfilePage(),
       'list_billing_address_page': (BuildContext context) => ListBillingAddressPage(),
-      'list_delivery_address_page': (BuildContext context) => ListDeliveryAddressPage(),
+      'list_delivery_address_page': (BuildContext context) => AddressPointPage(),
     };

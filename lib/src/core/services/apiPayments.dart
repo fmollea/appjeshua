@@ -49,7 +49,7 @@ class ApiPayments {
       "shippingAddress": user.billingId,
       "billingAddress": user.deliveryId,
       "typeBilling": "factura",
-      "typeShipping": "acude",
-      "sucursalId": 1,
+      "typeShipping": user.typeShipping,
+      "sucursalId": user.idSucursal
     };
 }

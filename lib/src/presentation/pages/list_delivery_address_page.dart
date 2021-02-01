@@ -21,15 +21,6 @@ class _ListDeliveryAddressPageState extends State<ListDeliveryAddressPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Punto de entrega", style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold)),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: addAddress,
-          )
-        ],
-      ),
       body: _drawScreen(),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -76,7 +67,7 @@ class _ListDeliveryAddressPageState extends State<ListDeliveryAddressPage> {
           child: Card( child:
           ListTile(
             onTap: addAddress,
-            leading: Icon(Icons.add_circle_outline, color: Utils.primaryColor),
+            leading: Icon(Icons.add_circle_outline, color: Utils.blueAccent),
             title: Text("Agregar dirección", style: TextStyle(color: Colors.black87, fontSize: 18.0)),
             subtitle: Text("Agregue la dirección donde desea recibir su pedido", style: TextStyle(color: Colors.black54, fontSize: 16.0)),
       )
@@ -103,7 +94,8 @@ class _ListDeliveryAddressPageState extends State<ListDeliveryAddressPage> {
     Icon icon;
 
     if (item.predeterminada!= 0) {
-      icon = Icon(Icons.place, color: Utils.primaryColor);
+      icon = Icon(Icons.place, color: Utils.blueAccent);
+      user.typeShipping = "recibe";
       user.deliveryId = item.id;
       user.deliveryAddress = item;
     } else {

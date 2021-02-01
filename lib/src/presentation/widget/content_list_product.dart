@@ -72,12 +72,12 @@ class _ContentListProductState extends State<ContentListProduct> {
   }
 
   _fetchData() async {
-    _page++;
+    _page = _page + 1;
     Products response;
     try {
       if (widget.params.containsKey('queryparam')) {
         final query = widget.params['queryparam'];
-        response = await api.searchProductsByQueryParam(query, _perpage);
+        response = await api.searchProductsByQueryParam(query, _perpage, _page);
       }
 
       if (widget.params.containsKey('category') && widget.params['category'] != 'none') {

@@ -119,6 +119,28 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
         });
   }
 
+  void showDialogAreYouSure() {
+    BuildContext dialogContext;
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          dialogContext = context;
+          return WillPopScope(
+              onWillPop: () async => false,
+              child: ContentDialog(
+              pathImg: 'assets/icon_adicioncar.png',
+              title: 'Confirmar compra',
+              subtitle: '¿Estas seguro de realizar tu compra?',
+              textPrimaryAction: 'Confirmar',
+              primaryAction: processPayment,
+              textSecondaryAction: 'Cancelar',
+              secondaryAction: () { Navigator.pop(dialogContext); },
+            ),
+          );
+        });
+  }
+
   bool checkSelected() {
     bool check = false;
     _listPaymentMethods.list.forEach((element) {
@@ -196,6 +218,6 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
     return Container(
             padding: EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 24),
             child: ButtonWidget(
-                processPayment, Utils.redColor, "Finalizar compra"));
+                showDialogAreYouSure, Utils.redColor, "Finalizar compra"));
   }
 }
