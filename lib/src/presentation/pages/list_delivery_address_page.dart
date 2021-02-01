@@ -33,7 +33,7 @@ class _ListDeliveryAddressPageState extends State<ListDeliveryAddressPage> {
       body: _drawScreen(),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(24.0),
-        child: ButtonWidget(navToPage, Utils.primaryColor, "Siguiente"),
+        child: ButtonWidget(navToPage, Utils.redColor, "Siguiente"),
       ),
     );
   }

@@ -8,6 +8,7 @@ import 'package:appjeshua/src/core/services/apiFavourite.dart';
 import 'package:appjeshua/src/core/services/apiProduct.dart';
 import 'package:appjeshua/src/presentation/widget/button_widget.dart';
 import 'package:appjeshua/src/presentation/widget/container_with_border.dart';
+import 'package:appjeshua/src/presentation/widget/simple_content_dialog.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 
@@ -81,11 +82,9 @@ class _DetailProductPageState extends State<DetailProductPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _drawName(),
-          _drawCode(),
-          _drawImage(),
+          _drawCardNameCodeAndImage(),
           Container(height: 8),
-          _drawDescription(),
+          _drawCardDescription(),
           _drawCodeAndAvailable(),
           Container(height: 8),
           _drawRowPrices(),
@@ -93,6 +92,33 @@ class _DetailProductPageState extends State<DetailProductPage> {
         ],
       ),
     );
+  }
+
+  _drawCardNameCodeAndImage() {
+    return Card(
+      elevation: 8,
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _drawName(),
+          _drawCode(),
+          _drawImage()
+          ]
+        ),
+      ),
+    );
+  }
+
+  _drawCardDescription() {
+    return Card(
+      elevation: 8,
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: _drawDescription()
+      ),
+    ); 
   }
 
   navToPage() {
@@ -124,8 +150,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
           Navigator.pop(context);
         
           if (NetworkUtils.isReqSuccess(response.code)) {
-            Utils.showToast(_product.name + " agregado al carrito.",
-                Colors.white, Colors.green);  
+            showDialogAddedToCart();
           } else {
             Utils.showToast(_product.name + " no se pudo agregar al carrito.",
                 Colors.white, Colors.red);
@@ -139,6 +164,25 @@ class _DetailProductPageState extends State<DetailProductPage> {
     setState(() {
       
     });
+  }
+
+  void showDialogAddedToCart() {
+    BuildContext dialogContext;
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          dialogContext = context;
+          return WillPopScope(
+              onWillPop: () async => false,
+              child: SimpleContentDialog(
+              pathImg: 'assets/icon_adicioncar.png',
+              title: '¡Adicionado al carrito!',
+              textAction: 'Seguir Comprando',
+              action: () { Navigator.pop(dialogContext); }
+            ),
+          );
+        });
   }
 
   showLoading() {
@@ -275,7 +319,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
         Text(
         '$label ',
         style: TextStyle(
-            color: Utils.secondaryColor,
+            color: Utils.blueAccent,
             fontWeight: FontWeight.bold,
             fontSize: 16),
       ),
@@ -287,7 +331,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
   Widget _precio(String price) => Text(
         '\$ ' + price,
         style: TextStyle(
-            color: Utils.secondaryColor,
+            color: Utils.blueAccent,
             fontWeight: FontWeight.bold,
             fontSize: 20),
       );
@@ -370,7 +414,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
         padding: const EdgeInsets.all(16.0),
         child: ButtonWidget(() {
           addProductCart();
-        }, Utils.primaryColor, 'Agregar al carrito'),
+        }, Utils.redColor, 'Agregar al carrito'),
       );
 
   _drawCode() {

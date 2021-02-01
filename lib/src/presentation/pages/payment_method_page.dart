@@ -196,6 +196,6 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
     return Container(
             padding: EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 24),
             child: ButtonWidget(
-                processPayment, Utils.primaryColor, "Finalizar compra"));
+                processPayment, Utils.redColor, "Finalizar compra"));
   }
 }

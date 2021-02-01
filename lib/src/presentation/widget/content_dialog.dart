@@ -31,12 +31,12 @@ class ContentDialog extends StatelessWidget {
         children: [
           Icon(
               Icons.check_circle_outline,
-              color: Utils.redColor,
+              color: Utils.blueAccent,
               size: 72),
           Container(height: 12),
           Text(title,
               style: TextStyle(
-                  color: Utils.redColor,
+                  color: Utils.blueAccent,
                   fontSize: 22,
                   fontWeight: FontWeight.bold)),
           Text(subtitle, style: TextStyle(color: Colors.black87, fontSize: 18)),
@@ -48,7 +48,7 @@ class ContentDialog extends StatelessWidget {
                   style: TextStyle(color: Colors.white, fontSize: 14)),
             ),
             onPressed: primaryAction,
-            color: Utils.primaryColor,
+            color: Utils.redColor,
           ),
           FlatButton(
             child: Text(textSecondaryAction,

@@ -44,7 +44,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
 
   Widget _buttonRegister() {
     return ButtonWidget(
-        forgetPassword, Utils.primaryColor, 'Cambiar contraseña');
+        forgetPassword, Utils.redColor, 'Cambiar contraseña');
   }
 
   forgetPassword() async {

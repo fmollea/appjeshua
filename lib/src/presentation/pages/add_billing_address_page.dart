@@ -59,7 +59,7 @@ class _AddBillingAddressPageState extends State<AddBillingAddressPage> {
   Widget _buttonRegister() {
     return Padding(
       padding: EdgeInsets.all(18.0),
-      child: ButtonWidget(saveAddress, Utils.primaryColor, 'Guardar dirección')
+      child: ButtonWidget(saveAddress, Utils.redColor, 'Guardar dirección')
     );
   }
 

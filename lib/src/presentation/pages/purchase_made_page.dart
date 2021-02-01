@@ -146,7 +146,7 @@ class PurchaseMadePage extends StatelessWidget {
               child: ButtonWidget(() {
           Navigator.of(context).pushNamedAndRemoveUntil(
             'main_page', ModalRoute.withName('login'));
-          }, Utils.primaryColor, "Seguir Comprando"),
+          }, Utils.redColor, "Seguir Comprando"),
       ),
     );
 

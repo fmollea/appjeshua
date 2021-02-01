@@ -54,7 +54,7 @@ class _AddDeliveryAddressPageState extends State<AddDeliveryAddressPage> {
   Widget _buttonRegister() {
     return Padding(
         padding: EdgeInsets.all(18.0),
-        child: ButtonWidget(saveAddress, Utils.primaryColor, 'Guardar Dirección')
+        child: ButtonWidget(saveAddress, Utils.redColor, 'Guardar Dirección')
     );
   }
 

@@ -73,7 +73,7 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
               Padding(
                   padding: EdgeInsets.only(right: 24, left: 24, bottom: 8),
                   child:
-                      ButtonWidget(navToPage, Utils.primaryColor, "Siguiente")),
+                      ButtonWidget(navToPage, Utils.redColor, "Siguiente")),
             ],
           );
         } else {
@@ -103,7 +103,7 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
           children: <Widget>[
             Expanded(
                 child: Text(
-                    'Tienes ' + listCarts.list.length.toString() + ' árticulos',
+                    'Tienes ' + listCarts.list.length.toString() + ' artículos',
                     style: TextStyle(
                         color: Colors.black54,
                         fontSize: 18.0,
@@ -111,7 +111,7 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
             Text(
               '\$ $total MXN',
               style: TextStyle(
-                  color: Colors.redAccent,
+                  color: Utils.primaryColor,
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold),
             )
@@ -174,7 +174,7 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
                       Text(
                         '\$ ${listCarts.list[index].product.price} MXN',
                         style: TextStyle(
-                            color: Colors.redAccent,
+                            color: Utils.primaryColor,
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold),
                       ),
@@ -434,7 +434,7 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
         ),      
         Container(width: 4),          
         IconButton(
-          icon: Icon(Icons.delete, color: Colors.lightBlue[800]), 
+          icon: Icon(Icons.delete, color: Utils.blueAccent), 
           onPressed: () {
             final id = listCarts.list[index].product.id;
             cartsUpdates[index] = 0;

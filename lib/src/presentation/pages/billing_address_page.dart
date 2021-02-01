@@ -96,7 +96,7 @@ class _BillingAddressPageState extends State<BillingAddressPage> {
           child: Container(
               padding: EdgeInsets.only(left: 20, right: 20, top: 24, bottom: 24),
               color: Colors.white,
-              child: ButtonWidget(navToPage, Utils.primaryColor, "Continuar"))),
+              child: ButtonWidget(navToPage, Utils.redColor, "Continuar"))),
     );
   }
 

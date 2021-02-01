@@ -33,7 +33,7 @@ class GridProductWidget extends StatelessWidget {
   Widget _drawGrid() {
     return SliverGrid(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: 0.7,
+          childAspectRatio: 0.58,
           crossAxisCount: 2,
           crossAxisSpacing: 8.0,
           mainAxisSpacing: 5.0),

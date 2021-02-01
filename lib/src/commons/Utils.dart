@@ -18,6 +18,7 @@ class Utils {
   static final Color secondaryColor = Color(0xFF476bb2);
   static final Color redColor = Color.fromRGBO(227, 42, 37, 1);
   static final Color iconBottomColor = Color.fromRGBO(0, 242, 255, 1);
+  static final Color blueAccent = Colors.lightBlue[800];
   static final Color textDarkColor = Colors.black87;
 
   static final String path1 = "https://www.google.com/imgres?imgurl=https%3A%2F%2Fassets.pokemon.com%2Fassets%2Fcms2%2Fimg%2Fpokedex%2Ffull%2F006.png&imgrefurl=https%3A%2F%2Fwww.pokemon.com%2Fes%2Fpokedex%2Fcharizard&tbnid=xl2wn-641bZMzM&vet=10CBQQxiAoAmoXChMIwLn68fnu7QIVAAAAAB0AAAAAEAo..i&docid=J82tE9FLOV9jyM&w=475&h=475&itg=1&q=charmander&ved=0CBQQxiAoAmoXChMIwLn68fnu7QIVAAAAAB0AAAAAEAo";

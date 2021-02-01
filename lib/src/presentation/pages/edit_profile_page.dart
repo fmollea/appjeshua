@@ -111,7 +111,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   drawBottom() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: ButtonWidget(editProfile, Utils.primaryColor, "Editar"),
+      child: ButtonWidget(editProfile, Utils.redColor, "Editar"),
     );
   }
 

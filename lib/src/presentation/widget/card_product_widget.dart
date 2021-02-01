@@ -77,7 +77,7 @@ class _CardProductWidgetState extends State<CardProductWidget> {
             '\$' + item.price,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Colors.lightBlue[800],
+                color: Utils.blueAccent,
                 fontSize: 18,
                 fontFamily: 'Roboto'),
           ),
@@ -92,7 +92,7 @@ class _CardProductWidgetState extends State<CardProductWidget> {
     return InkResponse(
       child: Container(
         padding: EdgeInsets.all(4),
-        color: Colors.lightBlue[800],
+        color: Utils.blueAccent,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

@@ -65,7 +65,7 @@ class PurchaseConfirmationPage extends StatelessWidget {
           Expanded(child: Text('')),
           ButtonWidget(() {
             Navigator.pushNamed(context, 'purchase_made_page');
-          }, Utils.primaryColor, "Siguiente")
+          }, Utils.redColor, "Siguiente")
         ],
       ),
     );
