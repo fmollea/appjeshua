@@ -71,23 +71,40 @@ class DataSearch extends SearchDelegate {
             return Padding(
               padding: const EdgeInsets.only(top: 16.0),
               child: ListView(children: listSuggestions.map((product) {
-                return ListTile(
-                  leading: FadeInImage(
-                    image: NetworkImage(Utils.getProductImage(product.path, product.id)),
-                    placeholder: AssetImage('assets/not_found.png'),
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.contain,
-                  ),
-                  title: Padding(
-                    padding: const EdgeInsets.only(left: 4.0),
-                    child: Text(product.name),
-                  ),
-                  onTap: () {
-                    Navigator.pushNamed(context, 'products_detail_page',
-                        arguments: product.slug);
-                  },
-                );
+                try {
+                  return ListTile(
+                    leading: FadeInImage(
+                      image: NetworkImage(Utils.getProductImage(product.path, product.id)),
+                      placeholder: AssetImage('assets/not_found.png'),
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.contain,
+                    ),
+                    title: Padding(
+                      padding: const EdgeInsets.only(left: 4.0),
+                      child: Text(product.name),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(context, 'products_detail_page',
+                          arguments: product.slug);
+                    },
+                  );
+                } catch (e) {
+                  return ListTile(
+                    leading: Image.asset('assets/not_found.png', width: 50,
+                      height: 50,
+                      fit: BoxFit.contain, ),
+                    title: Padding(
+                      padding: const EdgeInsets.only(left: 4.0),
+                      child: Text(product.name),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(context, 'products_detail_page',
+                          arguments: product.slug);
+                    },
+                  );
+                }
+                
               }).toList()),
             );
           } else {

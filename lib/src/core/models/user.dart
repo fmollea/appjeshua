@@ -26,6 +26,7 @@ class User {
   int billingId;
   List<Cart> carts;
   int cantCarts;
+  String route;
   String lastOrder;
   String date;
   String idOrder;

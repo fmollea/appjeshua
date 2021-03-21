@@ -72,12 +72,12 @@ class _ContentListProductState extends State<ContentListProduct> {
   }
 
   _fetchData() async {
-    _page = _page + 1;
+    _page++;
     Products response;
     try {
       if (widget.params.containsKey('queryparam')) {
         final query = widget.params['queryparam'];
-        response = await api.searchProductsByQueryParam(query, _perpage, _page);
+        response = await api.searchProductsByQueryParam(query, 20, _page);
       }
 
       if (widget.params.containsKey('category') && widget.params['category'] != 'none') {
@@ -87,6 +87,7 @@ class _ContentListProductState extends State<ContentListProduct> {
       }
 
       if (widget.params.containsKey('queryparam')) {
+        print("entra al segundo query: ${response.list}");
         final query = widget.params['queryparam'];
         var listAux = response.list.toList();
         final listSuggestions = (query.isEmpty)
@@ -101,6 +102,7 @@ class _ContentListProductState extends State<ContentListProduct> {
         _list = _list + response.list.toList();
       }
     } catch (e) {
+      print("error cargar productos: $e");
       response = await api.getProducts(_page);
       _list = _list + response.list.toList();
     }

@@ -81,6 +81,7 @@ class _PillsPageState extends State<PillsPage> {
       slivers: <Widget>[
         _imageBanner(),
         SliverPadding(padding: EdgeInsets.all(8.0)),
+        _drawDeliveryRoute(),
         _drawCategories(),
         SliverPadding(padding: EdgeInsets.all(8.0)),
         SliverPadding(
@@ -203,6 +204,35 @@ class _PillsPageState extends State<PillsPage> {
       image: NetworkImage(path),
       placeholder: AssetImage('assets/slidedemo.png'),
       fit: BoxFit.fill,
+    );
+  }
+
+  _drawDeliveryRoute() {
+    return SliverPadding(
+      padding: EdgeInsets.all(8),
+          sliver: SliverToBoxAdapter( 
+            child: Container(
+              padding: EdgeInsets.all(12),
+              child: Row(
+                children: [
+                  Icon(Icons.local_shipping, color: Colors.yellowAccent),
+                  Container(width: 8),
+                  Row(
+                    children: [
+                      Text('Ruta de entrega: ',style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16), 
+                    textAlign: TextAlign.center),
+                  Container(width: 6),  
+                  Text('${user.route}',style: TextStyle(color: Colors.yellowAccent, fontWeight: FontWeight.bold, fontSize: 18), 
+                    textAlign: TextAlign.center),
+                    ],
+                  ),  
+                ],
+              ),
+              decoration: BoxDecoration(
+                color: Utils.blueAccent,
+                borderRadius: BorderRadius.all(Radius.circular(16))
+              )),
+          ),
     );
   }
 }

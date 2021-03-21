@@ -27,5 +27,6 @@ class LoginDto {
     user.image = snapshot['image'];
     user.deliveryId = snapshot['shippingAddress']['id'];
     user.billingId = snapshot['billingAddress']['id'];
+    user.route = snapshot['route'];
   }
 }

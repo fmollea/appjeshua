@@ -49,6 +49,7 @@ class _ProfilePageState extends State<ProfilePage> implements ProfilePageView {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           drawHeader(),
+          drawDeliveryRoute(),
           drawOptions('Historial de pedidos', 'history', 'history_order_page'),
           drawDivider(),
           drawOptions('Datos personales', 'person', 'details_profile'),
@@ -111,5 +112,32 @@ class _ProfilePageState extends State<ProfilePage> implements ProfilePageView {
   String getImagePath() {
     if (_user.image == null) return null;
     else return Utils.getPerfilImage(_user.image, _user.userId);
+  }
+
+  drawDeliveryRoute() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        padding: EdgeInsets.all(12),
+        child: Row(
+          children: [
+            Icon(Icons.local_shipping, color: Colors.yellowAccent),
+            Container(width: 8),
+            Row(
+              children: [
+                Text('Ruta de entrega: ',style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16), 
+              textAlign: TextAlign.center),
+            Container(width: 6),  
+            Text('${_user.route}',style: TextStyle(color: Colors.yellowAccent, fontWeight: FontWeight.bold, fontSize: 18), 
+              textAlign: TextAlign.center),
+              ],
+            ),  
+          ],
+        ),
+        decoration: BoxDecoration(
+          color: Utils.blueAccent,
+          borderRadius: BorderRadius.all(Radius.circular(16))
+        )),
+    );
   }
 }

@@ -50,6 +50,8 @@ class ApiProduct {
     final url = Uri.https(api.urlBase, buildPath, params);
 
     final response = await http.get(url);
+    print("es la url de category: $url");
+    print("es el page de category: $page");
     final decodedData = json.decode(response.body);
 
     if (decodedData['data'] == null || (decodedData['data'] as List<dynamic>).isEmpty) {
@@ -68,12 +70,21 @@ class ApiProduct {
       _page: page.toString(),
     };    
 
-    final buildPath = '${api.urlProductSearch}/$query/${user.userId}/null/$perpage/${user.idSucursal}/a-z';
+    var products = Products();
+    if (user.filterUrl == null) user.filterUrl = 'a-z';
+
+    final buildPath = '${api.urlProductSearch}/$query/${user.userId}/null/$perpage/${user.idSucursal}/${user.filterUrl}';
 
     final url = Uri.https(api.urlBase, buildPath, params);
     final response = await http.get(url);
+    print("es la url de search: $url");
+    print("es el page de search: $page");
     final decodedData = json.decode(response.body);
-    final products = Products.fromJsonList(decodedData['data']);
+    if (decodedData['data'] == null) {
+      products = Products.fromJsonList(decodedData);
+    } else {
+      products = Products.fromJsonList(decodedData['data']);
+    }
 
     return products;
   }

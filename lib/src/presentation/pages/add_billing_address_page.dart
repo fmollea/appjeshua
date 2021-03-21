@@ -26,7 +26,7 @@ class _AddBillingAddressPageState extends State<AddBillingAddressPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomPadding: true,
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
             title: Text("Crear dirección de facturación", style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold))
         ),

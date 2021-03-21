@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:appjeshua/src/commons/Utils.dart';
 import 'package:appjeshua/src/core/models/user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'circle_image_widget.dart';
 
@@ -100,11 +101,18 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         title:
             Text(text, style: TextStyle(color: Colors.white, fontSize: 18.0)),
         onTap: () {
-          Navigator.of(context)
-              .pushNamedAndRemoveUntil(path, (Route<dynamic> route) => false);
+          _closeSesion(path);
         },
       ),
     );
+  }
+
+  _closeSesion(String path) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('name', '');
+        prefs.setString('password', '');
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil(path, (Route<dynamic> route) => false);
   }
 
   navToPage(String path) {

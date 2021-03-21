@@ -123,7 +123,7 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
     _totalAmount = 0;
     listCarts.list.forEach((element) {
       _totalAmount =
-          _totalAmount + element.quantity * double.parse(element.product.price);
+          _totalAmount + element.quantity * double.parse(element.product.selectPrice(element.quantity));
     });
   }
 
@@ -140,6 +140,8 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
   }
 
   Widget _drawRowPurchaseSummary(int index) {
+    int quantity = listCarts.list[index].quantity;
+    String price = listCarts.list[index].product.selectPrice(quantity);
     return Padding(
         padding: EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 16),
         child: Card(
@@ -172,7 +174,7 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
                               TextStyle(color: Colors.black54, fontSize: 16.0), maxLines: 2),
                       Text('', style: TextStyle(fontSize: 8.0)),
                       Text(
-                        '\$ ${listCarts.list[index].product.price} MXN',
+                        '\$ $price MXN',
                         style: TextStyle(
                             color: Utils.primaryColor,
                             fontSize: 18.0,
@@ -188,176 +190,6 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
         ),
             )));
   }
-
- /* _drawCantAndDelete(int index) {
-    TextEditingController controller = TextEditingController();
-    controller.text = listCarts.list[index].quantity.toString();
-    return Row(
-      key: UniqueKey(),
-      children: <Widget>[
-        GestureDetector(
-          child: Container(
-            width: 32,
-            height: 32,
-            decoration:
-              BoxDecoration(border: Border.all(color: Colors.black26)),
-            child: Center(child:Text('-', style: TextStyle(fontSize: 16)))),
-          onTap: () {
-                  if (listCarts.list[index].quantity > 0) {
-                    listCarts.list[index].quantity--;
-                    _totalAmount = _totalAmount -
-                        double.parse(listCarts.list[index].product.price);
-                    cartsUpdates[index] = 1;
-                    setState(() {});
-                  }
-                },
-        ),
-        Expanded(child: Container(
-          height: 32,
-          child: Center(
-            child: Focus(
-              onFocusChange: (hasFocus) {
-                  if(hasFocus) {
-                    controller.text = "";
-                  } else {
-                    checkTextField(controller);
-                  }
-              },
-              child: TextField(
-              style: TextStyle(fontSize: 16),
-              textAlign: TextAlign.center,
-              controller: controller,
-              onChanged: (value) {
-                if (value != null && int.parse(value) > 0) {
-                    listCarts.list[index].quantity = int.parse(value);
-                    _totalAmount = _totalAmount -
-                        double.parse(listCarts.list[index].product.price);
-                    cartsUpdates[index] = 1;
-                  } else {
-                    Utils.showToast(
-                      "La cantidad seleccionada tiene que ser mayor a 0.", Colors.white, Colors.red);
-                    setState(() {});
-                  }
-              },
-              onEditingComplete: () {
-                  checkTextField(controller);
-              },
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(0),
-              )),
-            ),
-          ),
-        ),
-    )),
-        GestureDetector(
-          child: Container(
-            height: 32,
-            width: 32,
-            decoration:
-                BoxDecoration(border: Border.all(color: Colors.black26)),
-            child: Center(child: Text('+', style: TextStyle(fontSize: 16)))),
-            onTap: () {
-              if (listCarts.list[index].quantity < int.parse(listCarts.list[index].product.stock)) {
-                listCarts.list[index].quantity++;
-                _totalAmount = _totalAmount +
-                    double.parse(listCarts.list[index].product.price);
-                cartsUpdates[index] = 1;
-                setState(() {}); 
-              } else {
-                Utils.showToast("La cantidad seleccionada tiene que ser menor a ${listCarts.list[index].product.stock}.", Colors.white, Colors.red);
-              }
-                
-            }
-        ),      
-        Container(width: 8),          
-        FlatButton(
-          child: Text('ELIMINAR',
-              style: TextStyle(
-                  color: Colors.black54, fontWeight: FontWeight.bold)),
-          onPressed: () {
-            final id = listCarts.list[index].product.id;
-            cartsUpdates[index] = 0;
-            _removeCart(id, index);
-          },
-        )
-      ],
-    );
-  }
-
-  checkTextField(TextEditingController controller) {
-    if (controller.text == "") controller.text = "0";
-    setState(() {});
-  }
-
-  _removeCart(int id, int index) async {
-    ResponseDto response = await _apiCart.removeProducCart(id);
-    if (NetworkUtils.isReqSuccess(response.code)) {
-      
-        _totalAmount = _totalAmount -
-            listCarts.list[index].quantity *
-                double.parse(listCarts.list[index].product.price);
-        listCarts.list.removeAt(index);
-    } else {
-      Utils.showToast(
-          "No se pudo eliminar el producto " +
-              listCarts.list[index].product.name +
-              " del carrito.",
-          Colors.white,
-          Colors.red);
-    }
-    setState(() {
-      if (listCarts.list.length == 0) {
-        listCarts.list = List<Cart>();
-      }
-    });
-  }
-
-  initArrayListOfUpdates() {
-    cartsUpdates = List.filled(listCarts.list.length, 0);
-  }
-
-  Future<bool> onWillPop() async {
-    Utils.showLoading(context);
-    await updatesCarts();
-    Utils.hideLoading(context);
-    Navigator.of(context).pop(true);
-  }
-
-  Future updatesCarts() async {
-    for(int i = 0; i< cartsUpdates.length; i++) {
-      if (cartsUpdates[i] == 1) {
-        await _updateCart(i, listCarts.list[i].quantity);
-        print(listCarts.list[i].product.name);
-      }
-    }
-  }
-
-  Future _updateCart(int index, int amount) async {
-    final id = listCarts.list[index].product.id;
-    ResponseDto responseDto = await _apiCart.removeProducCart(id);
-    if (NetworkUtils.isReqSuccess(responseDto.code)) {
-      await _apiCart.addProductCart(amount, id);
-    }
-  }
-
-  emptyCart() {
-    if (listCarts.list.isNotEmpty) {
-      Utils.showLoading(context);
-      emptyCartApi();
-      initArrayListOfUpdates();
-    }
-  }
-
-  void emptyCartApi() async {
-    ResponseDto responseDto = await _apiCart.emptyCart();
-    if (NetworkUtils.isReqSuccess(responseDto.code)) {
-      listCarts.list = List<Cart>();
-      Utils.hideLoading(context);
-    }
-    setState(() {});    
-  } */
 
   _drawCantAndDelete(int index) {
     TextEditingController controller = TextEditingController();
@@ -376,7 +208,7 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
                   if (listCarts.list[index].quantity > 0) {
                     listCarts.list[index].quantity--;
                     _totalAmount = _totalAmount -
-                        double.parse(listCarts.list[index].product.price);
+                        double.parse(listCarts.list[index].product.selectPrice(listCarts.list[index].quantity));
                     cartsUpdates[index] = 1;
                     controller.text = listCarts.list[index].quantity.toString();
                     setState(() {});
@@ -425,7 +257,7 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
                 } else {
                   listCarts.list[index].quantity++;
                   _totalAmount = _totalAmount +
-                    double.parse(listCarts.list[index].product.price);
+                    double.parse(listCarts.list[index].product.selectPrice(listCarts.list[index].quantity));
                   cartsUpdates[index] = 1;
                   controller.text = listCarts.list[index].quantity.toString();
                 } 
@@ -459,7 +291,7 @@ class _PurchaseSumaryPageState extends State<PurchaseSumaryPage> {
     } else if (newValue != null && newValue > 0) {
         listCarts.list[index].quantity = newValue;
         _totalAmount = _totalAmount -
-            double.parse(listCarts.list[index].product.price);
+            double.parse(listCarts.list[index].product.selectPrice(listCarts.list[index].quantity));
         cartsUpdates[index] = 1;
       } else {
         Utils.showToast(

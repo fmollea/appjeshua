@@ -86,6 +86,8 @@ class _DetailProductPageState extends State<DetailProductPage> {
           Container(height: 8),
           _drawCardDescription(),
           _drawCodeAndAvailable(),
+          _product.existPricebyMayor() ? Container(height: 8) : Container(),
+          _product.existPricebyMayor() ? _drawCardPriceTable() : Container(),
           Container(height: 8),
           _drawRowPrices(),
           _drawAmount(),
@@ -306,9 +308,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
 
   Widget _drawRowPrices() {
     return Row(
-      children: [_labelPrecio('Precio', _product.price), 
-      //VerticalDivider(width: 2),
-      //_labelPrecio('Precio P{ublico', _product.priceWithOutIva)
+      children: [_labelPrecio('Precio', _product.selectPrice(_quantitySelected)), 
       ],
     );
   }
@@ -424,6 +424,56 @@ class _DetailProductPageState extends State<DetailProductPage> {
           style: TextStyle(
               color: Colors.black87,
               fontSize: 16.0)),
+    );
+  }
+
+  _drawCardPriceTable() {
+    return Card(
+      elevation: 8,
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: _drawContenPriceTable()
+      ),
+    ); 
+  }
+
+  _drawContenPriceTable() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Tabla de precios por piezas', style: TextStyle(color: Utils.secondaryColor, fontWeight: FontWeight.bold)),
+          Container(height: 8),
+          _product.cantMayor2 == 0 ? Container() : _drawRowPriceToPieces(_product.cantMayor2, _product.price2),
+          _product.cantMayor3 == 0 ? Container() : _drawRowPriceToPieces(_product.cantMayor3, _product.price3),
+          _product.cantMayor4 == 0 ? Container() : _drawRowPriceToPieces(_product.cantMayor4, _product.price4),
+      ],
+    );
+  }
+
+  _drawRowPriceToPieces(int cantMayor, String price) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: [
+          Container(
+            padding: EdgeInsets.all(8),
+            child: Text('Hasta $cantMayor piezas: ',
+              style: TextStyle(
+              color: Colors.white,
+              fontSize: 14.0)),
+            decoration: BoxDecoration(
+              color: Utils.blueAccent,
+              borderRadius: BorderRadius.all(Radius.circular(8))
+            )  
+          ),
+          Container(width: 8),
+          Expanded(child: Container(
+            padding: EdgeInsets.all(8),
+            child: Text('\$ ' + price,
+              style: TextStyle(color: Colors.black87, fontSize: 16.0), maxLines: 5),
+          )),
+        ],
+      ),
     );
   }
 }
