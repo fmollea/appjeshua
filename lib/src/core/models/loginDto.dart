@@ -25,8 +25,10 @@ class LoginDto {
     user.sucursalName = snapshot['sucursal_name'];
     user.userId = snapshot['id'];
     user.image = snapshot['image'];
-    user.deliveryId = snapshot['shippingAddress']['id'];
-    user.billingId = snapshot['billingAddress']['id'];
+    user.deliveryId = snapshot['shippingAddress'] == null ? -1 :
+      snapshot['shippingAddress']['id'];
+    user.billingId = snapshot['billingAddress'] == null ? -1 :
+    snapshot['billingAddress']['id'];
     user.route = snapshot['route'];
   }
 }

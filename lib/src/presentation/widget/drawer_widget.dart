@@ -58,19 +58,22 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         children: [
           CircleImageWidget(path: getImagePath(), width: 90, height: 90),
           Container(width: 16.0),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                _user.name,
-                style: TextStyle(
-                    color: Utils.primaryColor,
-                    fontSize: 18.0,
-                    fontWeight:
-                        FontWeight.bold),
-              )
-            ],
+          Flexible(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  _user.name,
+                  maxLines: 2,
+                  style: TextStyle(
+                      color: Utils.primaryColor,
+                      fontSize: 18.0,
+                      fontWeight:
+                          FontWeight.bold),
+                )
+              ],
+            ),
           ),
         ],
       ),
